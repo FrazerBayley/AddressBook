@@ -2,8 +2,10 @@
 \usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
 \usepackage{fullpage} % changes the margin
 \usepackage{vhistory}
+\usepackage{enumitem}
 
 \newlength{\drop}
+\newcommand\tab[1][1cm]{\hspace*{#1}}
 
 \begin{document}
 	
@@ -13,7 +15,7 @@
 		\vspace*{\baselineskip}
 		\rule{\textwidth}{1.6pt}\vspace*{-\baselineskip}\vspace*{2pt}
 		\rule{\textwidth}{0.4pt}\\[\baselineskip]
-		{\LARGE \textbf{SOFTWARE REQUIREMENTS ANALYSIS}}\\[0.2\baselineskip]
+		{\LARGE \textbf{SOFTWARE REQUIREMENTS ANALYSIS \\ PROJECT 1 : ADDRESS BOOK}}\\[0.2\baselineskip]
 		\rule{\textwidth}{0.4pt}\vspace*{-\baselineskip}\vspace{3.2pt}
 		\rule{\textwidth}{1.6pt}\\[\baselineskip]
 		\scshape
@@ -27,23 +29,64 @@
 
 
 \tableofcontents
+\vspace*{10\baselineskip}
+\begin{versionhistory}
+	\vhEntry{.1}{17.01.17}{Haley Whitman}{Created initial outline of document}
+	\vhEntry{.2}{18.01.17}{Haley Whitman}{Working through document, sections 1 to 2}
+	
+\end{versionhistory}
 \pagebreak
 
 
-\section{Revision History}
-\begin{versionhistory}
-	\vhEntry{.1}{17.01.17}{Haley Whitman}{Created initial outline of document}
 
-\end{versionhistory}
+
 
 
 \section{Introduction}
 
 \subsection{Intended Audience}
-\subsection{Purpose}
+The following document covers aspects and functionality of visual interface for an Address Book that holds a collection of user entries which are comprised up of names, addresses, cities, states, ZIP codes, phone numbers, and email addresses. This document is intended for all stakeholders, which are listed below:
+\begin{itemize}
+	\item \textbf{Customer (Priority 1):} \\ The customer has given an initial list of requirements, which includes a minimum section of product functionality, the quality that this functionality should have, and a list of advanced possible features. Included in these requests are objectives that should be focused on throughout the project. This stakeholder should use this document to assert their own product visions and requests with the team's understanding of these requests. 
+	\item \textbf{Coding Oriented Group Members (Priority 2):} \\ Coding oriented group members should use this document in conjunction with the Software Design Specification (SDS) to understand the needed functionality of the product, as well as to get a more in depth understanding of why the SDS is created and framed in a certain way.
+	\item \textbf{Documentation Oriented Group Members (Priority 2):} \\ Documentation oriented group members should use this document to help the coding oriented group members in creating a SDS, to ensure that the proper requirements are encapsulated correctly by how the SRS defines them.
+\end{itemize}
+
 \subsection{How to Use this Document}
+This document is intended to serve as a reference for the list of requirements created by the customer stakeholder. This document has two uses:
+\begin{itemize}
+	\item \textbf{Assertion:} To ensure that the list of requirements detailed here meet with the project specifications given by the customer.
+	\item \textbf{Identifying User Activities:} To detail out user scenarios and activities to best understand how this application will be used and designed later in the SDS document.
+\end{itemize}
+The rest of this document is broken up into the following subsections.
+\begin{itemize}
+	\item \textbf{2. Concept of Operations:} Will detail the system requirements that are expected from a user's point of view. On top of this, section 3 will provide several use case models.
+	\item \textbf{3. Behavioral Requirements:} This will be  "black-box" view of the system, provided high-level descriptions of possible user inputs and expected outputs from the system. This section will not describe code-level descriptions of inputs and outputs.
+	\item \textbf{4. Quality Requirements:} Describes the additional higher-level system requirements from the product specifications such as performance, reliability, and maintainability.
+	\item \textbf{5. Expected Subsets:} Describes the project increments, beginning with the minimal working product to the final version and all product increments in between.
+	\item \textbf{6. Fundamental Assumptions:} Describes all product requirements and constraints that we do not expect to change during the lifetime of the product.
+	\item \textbf{7. Appendices:} Describes any local definitions and acronyms/abbreviations used in this project.
+\end{itemize}
 
 \section{Concept of Operations}
+\large \textbf{1. Brief Description}\\
+This use case describes how a user interacts with the Address Book to add and edit a new entry of another person. \\
+\large \textbf{2. Actors}\\
+\tab \large  \textbf{2.1 User}\\
+\tab \large  \textbf{2.2 Application}\\
+\large \textbf{3. Preconditions}\\
+The user has a mouse, keyboard, and the Address Book application open and visible on the display. There is enough memory on the computer to handle the size of a typical address book.\\
+\large \textbf{4. Basic Flow of Events}\\
+1. The use case begins when a user prepares to enter an address at the main screen of the Address Book\\
+2. The Address Book presents several options representing different modes, such as "Create a new Contact," "Delete a Contact," "Import an Address Book," and "Export an Address Book."\\ 
+3. The user selects to "Create a new Contact."
+4. The Address Book presents the user with a separate GUI within the main window representing the "Create a new Contact" mode.\\
+\large \textbf{5. Alternative Flows}\\
+\large \textbf{6. Key Scenarios}\\
+\large \textbf{7. Post Conditions}\\
+\large \textbf{8. Special Requirements}\\
+
+
 \subsection{System Context}
 \subsection{System Capabilities}
 
@@ -66,6 +109,24 @@
 \subsection{Definitions and Acronyms}
 \subsubsection{Definitions}
 \subsubsection{Acronyms and Abbreviations}
+
+	\begin{tabular}{ | m{1cm} | m{10cm} | } 
+		\hline
+		GUI & Graphical User Interface \\
+		\hline
+		SDS & Software Design Specification \\
+		\hline
+		SRS & Software Requirement Specification  \\
+		\hline
+		cell7 & cell8 \\
+		\hline
+	\end{tabular}
+
+
+
+
+
+
 
 
 
