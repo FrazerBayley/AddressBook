@@ -79,9 +79,20 @@ The user has a mouse, keyboard, and the Address Book application open and visibl
 \large \textbf{4. Basic Flow of Events}\\
 1. The use case begins when a user prepares to enter an address at the main screen of the Address Book\\
 2. The Address Book presents several options representing different modes, such as "Create a new Contact," "Delete a Contact," "Import an Address Book," and "Export an Address Book."\\ 
-3. The user selects to "Create a new Contact."
-4. The Address Book presents the user with a separate GUI within the main window representing the "Create a new Contact" mode.\\
+3. The user selects to "Create a new Contact." \\
+4. The Address Book presents the user to fill out information for the new contact.\\
+5. The user fills out the name, address, city, state, zip, phone number, and email address. \\
+6. Once filled out, the Address Book saves this information in the current address file.\\
+7. The user is presented with the main menu mode of the Address Book application.\\
 \large \textbf{5. Alternative Flows}\\
+\textbf{5.1 User not supplying all the information} \\
+If in step 5 the user does not fill out all of the information, then:\\
+\tab 1. The system checks if the first/last name are filled out, if yes, continue to step 6.\\
+\tab 2. If the first and last name are not filled out, stay at step 5 until completed.\\
+\textbf{5.2 User entered an address that conflicts with another address} \\
+If in step 6 the Address Book finds another address is already entered with the same information, then:\\
+\tab 1. The application displays "Current Address is already found in Address Book."\\
+\tab 2. The use case resumes at step 2.
 \large \textbf{6. Key Scenarios}\\
 \large \textbf{7. Post Conditions}\\
 \large \textbf{8. Special Requirements}\\
