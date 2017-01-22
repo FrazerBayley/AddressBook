@@ -13,6 +13,9 @@
 *.hst
 *.ver
 
+## Java Files
+*.class
+
 ## Intermediate documents:
 *.dvi
 *-converted-to.*
