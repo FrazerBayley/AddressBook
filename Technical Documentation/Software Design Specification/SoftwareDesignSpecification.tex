@@ -1,0 +1,84 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage{vhistory}
+\usepackage{enumitem}
+
+\newlength{\drop}
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+
+\begin{document}
+	
+	\begin{titlepage}
+		\drop=0.1\textheight
+		\centering
+		\vspace*{\baselineskip}
+		\rule{\textwidth}{1.6pt}\vspace*{-\baselineskip}\vspace*{2pt}
+		\rule{\textwidth}{0.4pt}\\[\baselineskip]
+		{\LARGE \textbf{SOFTWARE DESIGN SPECIFICATION \\ PROJECT 1 : ADDRESS BOOK}}\\[0.2\baselineskip]
+		\rule{\textwidth}{0.4pt}\vspace*{-\baselineskip}\vspace{3.2pt}
+		\rule{\textwidth}{1.6pt}\\[\baselineskip]
+		\scshape
+		\vspace*{2\baselineskip}
+		Edited by \\[\baselineskip]
+		{\Large Frazer Bayley \\ Haley Whitman \\ Abdulaziz Al-Heidous \\ Alison Legge \\ Jeremy Brennan\par}
+
+		\vfill
+		{\scshape \LARGE Project 1 -} \        {\LARGE Team 3}\par
+	\end{titlepage}
+
+
+\tableofcontents
+\vspace*{10\baselineskip}
+\begin{versionhistory}
+	\vhEntry{.1}{23.01.17}{Haley Whitman}{Created initial outline of document}
+
+	
+\end{versionhistory}
+\pagebreak
+
+\section{Introduction}
+\subsection{Intended Audience}
+The following document covers all functionality of the front and back end code and how they relate with the user's experience. This document is intended for programmers, team managers, and quality assurance on the developing team to ensure that the code is running to this specification.
+\subsection{How to Use this Document}
+This document is intended to help organize all modules, classes, and functions found in the Address Book code. It is meant to help all team members design their components to this specification, as well as having a straightforward method of analyzing 
+\section{Summary}
+The entirety of the program is based off of Java JDK 8, which is using a TSV file format to both load and export address book files. This document itself was created from the list of customer specifications which, with customer meetings, guided the creation of the Software Requirements Analysis, which was used to create the requirements needed to begin programming. This document will help create an Quality Assurance documents needed to test the quality of the resulting application. \\
+This document will contain all programming interactions between modules, classes, and functions. This will be achieved by both diagrams and showing all function headers and descriptions of what they achieve and their interactions.
+\section{User Interface Architecture}
+\section{Back-End Architecture}
+
+
+
+
+\section{Appendices}
+
+\subsection{Definitions and Acronyms}
+\subsubsection{Definitions}
+\subsubsection{Acronyms and Abbreviations}
+
+	\begin{tabular}{ | m{1cm} | m{10cm} | } 
+		\hline
+		GUI & Graphical User Interface \\
+		\hline
+		SDS & Software Design Specification \\
+		\hline
+		SRS & Software Requirement Specification  \\
+		\hline
+		TSV & Tab-Separated-Values \\
+		\hline
+	\end{tabular}
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
+
