@@ -1,16 +1,19 @@
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class MainFrame {
 
@@ -18,6 +21,7 @@ public class MainFrame {
     private JTable table;
     private JMenuBar menuBar;
     public static String index;
+    public static int txtBookNum = 1;
 
 
 	/**
@@ -53,11 +57,12 @@ public class MainFrame {
 		setupMenuBar();
 
 	    frame.setJMenuBar(menuBar);
-		frame.setBounds(200, 200, 450, 350);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setBounds(200, 200, 455, 350);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		// set the title
-		frame.setTitle("Address Book 1");
+		String fileName = "Address Book "+ txtBookNum;
+		frame.setTitle(fileName);
 		
 		// make the table scrollable
 		JScrollPane scrollPane = new JScrollPane();
@@ -77,16 +82,29 @@ public class MainFrame {
 			    {"John", "97405", new Integer(125)}
 			};
 		
-		table = new JTable(data, columnNames);
+		// to disable cell edit
+		DefaultTableModel tableModel = new DefaultTableModel(data, columnNames) {
+
+		    @Override
+		    public boolean isCellEditable(int row, int column) {
+		       //all cells false
+		       return false;
+		    }
+		};
+		table = new JTable();
+		table.setModel(tableModel);
+		// disable the ability to drag the columns
+		table.getTableHeader().setReorderingAllowed(false);
+
 		
 		// how to hide a column
 		//table.removeColumn(table.getColumnModel().getColumn(1));
 		
 		
 		// make column sortable
-//		TableRowSorter<TableModel> sorter 
-//	    = new TableRowSorter<TableModel>(table.getModel());
-//		table.setRowSorter(sorter);		
+		//TableRowSorter<TableModel> sorter 
+		//= new TableRowSorter<TableModel>(table.getModel());
+		//table.setRowSorter(sorter);		
 		
 		scrollPane.setViewportView(table);
 		
@@ -94,7 +112,7 @@ public class MainFrame {
 		btnAddNewContact.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// open the add window
-				new secFrame().setVisible(true);
+				//new secFrame().setVisible(true);
 			}
 		});
 		btnAddNewContact.setBounds(295, 23, 149, 29);
@@ -107,10 +125,10 @@ public class MainFrame {
 				int selectedColumnIndex = table.getSelectedColumn();
 				String selectedObject = (String) table.getModel().getValueAt(selectedRowIndex, 1);
 				index = selectedObject;
-				new secFrame().setVisible(true);
+				//new secFrame().setVisible(true);
 			}
 		});
-		btnViewSelectedContact.setBounds(265, 243, 161, 29);
+		btnViewSelectedContact.setBounds(295, 243, 161, 29);
 		frame.getContentPane().add(btnViewSelectedContact);
 		
 		
@@ -132,6 +150,9 @@ public class MainFrame {
 	    newMenuItem.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	    		// new file
+	    		txtBookNum++;
+	    		new MainFrame().frame.setVisible(true);
+	    		
 	    	}
 	    });
 	    fileMenu.add(newMenuItem);
@@ -140,7 +161,23 @@ public class MainFrame {
 	    JMenuItem openMenuItem = new JMenuItem("Open", null);
 	    openMenuItem.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
-	    		// new file
+	    		// open
+	    		JFileChooser chooser = new JFileChooser();
+	    		chooser.setCurrentDirectory(new java.io.File("."));
+	    		chooser.setDialogTitle("Open a file");
+	    		//chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+	    		//chooser.setAcceptAllFileFilterUsed(false);
+	    		FileNameExtensionFilter tsvfilter = new FileNameExtensionFilter(
+	    			     "tsv files (*.tsv)", "tsv");
+	    		chooser.setFileFilter(tsvfilter);
+
+	    		if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+	    		  System.out.println("getCurrentDirectory(): " + chooser.getCurrentDirectory());
+	    		  System.out.println("getSelectedFile() : " + chooser.getSelectedFile());
+	    		} else {
+	    		  System.out.println("No Selection ");
+	    		}
+
 	    	}
 	    });
 	    fileMenu.add(openMenuItem);
