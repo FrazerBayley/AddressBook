@@ -3,9 +3,32 @@
 \usepackage{fullpage} % changes the margin
 \usepackage{vhistory}
 \usepackage{enumitem}
+\usepackage{listings}
+\usepackage{color}
 
 \newlength{\drop}
 \newcommand\tab[1][1cm]{\hspace*{#1}}
+
+\definecolor{javared}{rgb}{0.6,0,0} % for strings
+\definecolor{javagreen}{rgb}{0.25,0.5,0.35} % comments
+\definecolor{javapurple}{rgb}{0.5,0,0.35} % keywords
+\definecolor{javadocblue}{rgb}{0.25,0.35,0.75} % javadoc
+
+\lstset{language=Java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{javapurple}\bfseries,
+	stringstyle=\color{javared},
+	commentstyle=\color{javagreen},
+	morecomment=[s][\color{javadocblue}]{/**}{*/},
+	numbers=left,
+	numberstyle=\tiny\color{black},
+	stepnumber=1,
+	numbersep=10pt,
+	tabsize=4,
+	showspaces=false,
+	showstringspaces=false}
+
+
 
 \begin{document}
 	
@@ -32,6 +55,7 @@
 \vspace*{10\baselineskip}
 \begin{versionhistory}
 	\vhEntry{.1}{23.01.17}{Haley Whitman}{Created initial outline of document}
+	\vhEntry{.1}{25.01.17}{Haley Whitman}{Added all code snippets}
 
 	
 \end{versionhistory}
@@ -46,7 +70,41 @@ This document is intended to help organize all modules, classes, and functions f
 The entirety of the program is based off of Java JDK 8, which is using a TSV file format to both load and export address book files. This document itself was created from the list of customer specifications which, with customer meetings, guided the creation of the Software Requirements Analysis, which was used to create the requirements needed to begin programming. This document will help create an Quality Assurance documents needed to test the quality of the resulting application. \\
 This document will contain all programming interactions between modules, classes, and functions. This will be achieved by both diagrams and showing all function headers and descriptions of what they achieve and their interactions.
 \section{User Interface Architecture}
-\section{Back-End Architecture}
+\subsection{GUI Handbook}
+\lstinputlisting[language=Java]{./exampleCode/AddressEntryFrame.java}
+\lstinputlisting[language=Java]{./exampleCode/AddressEntryFrame2.java}
+\lstinputlisting[language=Java]{./exampleCode/closeWindow.java}
+\subsubsection{Buttons}
+\lstinputlisting[language=Java]{./exampleCode/deleteButton.java}
+\lstinputlisting[language=Java]{./exampleCode/editButton.java}
+\lstinputlisting[language=Java]{./exampleCode/newEntry.java}
+\lstinputlisting[language=Java]{./exampleCode/addEntry.java}
+\subsection{Back-End Architecture}
+\subsubsection{Contact Class}
+The contact class is where all data regarding each entry in the address is kept. This class utilizes strings to hold all information about each entry. 
+
+\lstinputlisting[language=Java]{./exampleCode/contactClass.java}
+\lstinputlisting[language=Java]{./exampleCode/first.java}
+\lstinputlisting[language=Java]{./exampleCode/last.java}
+\lstinputlisting[language=Java]{./exampleCode/phone.java}
+\lstinputlisting[language=Java]{./exampleCode/email.java}
+\lstinputlisting[language=Java]{./exampleCode/address.java}
+\lstinputlisting[language=Java]{./exampleCode/city.java}
+\lstinputlisting[language=Java]{./exampleCode/state.java}
+\lstinputlisting[language=Java]{./exampleCode/zip.java}
+
+\subsubsection{AddressBook Class}
+\lstinputlisting[language=Java]{./exampleCode/createAddress.java}
+\lstinputlisting[language=Java]{./exampleCode/save.java}
+\lstinputlisting[language=Java]{./exampleCode/add.java}
+\lstinputlisting[language=Java]{./exampleCode/delete.java}
+\lstinputlisting[language=Java]{./exampleCode/searchBy.java}
+\subsubsection{Sorting}
+\lstinputlisting[language=Java]{./exampleCode/sortByName.java}
+\lstinputlisting[language=Java]{./exampleCode/sortByZip.java}
+\lstinputlisting[language=Java]{./exampleCode/compareName.java}
+\lstinputlisting[language=Java]{./exampleCode/compareZip.java}
+
 
 
 

@@ -1,0 +1,1 @@
+public void Delete(Contact data) { }
