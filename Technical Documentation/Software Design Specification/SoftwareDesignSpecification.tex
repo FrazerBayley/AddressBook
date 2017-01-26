@@ -5,6 +5,7 @@
 \usepackage{enumitem}
 \usepackage{listings}
 \usepackage{color}
+\usepackage{enumitem}
 
 \newlength{\drop}
 \newcommand\tab[1][1cm]{\hspace*{#1}}
@@ -71,20 +72,55 @@ The entirety of the program is based off of Java JDK 8, which is using a TSV fil
 This document will contain all programming interactions between modules, classes, and functions. This will be achieved by both diagrams and showing all function headers and descriptions of what they achieve and their interactions.
 \section{User Interface Architecture}
 \subsection{GUI Handbook}
+\subsection{Expected Input}
+The user is prompted to enter values for the following variables via text fields:
+\begin{enumerate}[nolistsep]
+	\setlength\itemsep{.1em}
+	\item First name
+	\item Last name
+	\item Phone number
+	\item Email
+	\item Address: Street and 2nd Address
+	\item City
+	\item State
+	\item ZIP code
+\end{enumerate}
+Other use inputs are included as buttons and from file menus, which are accessed by mouse clicks.
+\begin{enumerate}[nolistsep]
+	\setlength\itemsep{.1em}
+	\item Close (Both program, and for adding a contact)
+	\item Edit (Accessed by mouse clicking on a contact)
+	\item Delete (Accessed within the edit contact menu)
+	\item Search (Accessed by mouse clicking the search button next to the search bar)
+	\item New (Accessed in file menu, creates and loads a new address book)
+	\item Open (Accessed in file menu, opens an existing address book from a file directory)
+	\item Save (Accessed in file menu, )
+	\item Save As... (Accessed in file menu)
+	\item Quit (Accessed in file menu, quits application completely.)
+\end{enumerate}
+\subsubsection{Output}
+The user receives a list of contacts that they are able to view through, by scrolling a scroll bar on the side of the menu. They are able to access any visible contact by mouse clicks, and able to sort through this displayed list by sorting or searching. A user is allowed to edit or add a contact, which once changed can be elected to be saved and added to the current address book for future use. Upon loading any address book the current address book will be updated visually with the new address book.
+\subsection{GUI Window}
 \lstinputlisting[language=Java]{./exampleCode/AddressEntryFrame.java}
 \lstinputlisting[language=Java]{./exampleCode/AddressEntryFrame2.java}
-\lstinputlisting[language=Java]{./exampleCode/closeWindow.java}
+
 \subsubsection{Buttons}
 \lstinputlisting[language=Java]{./exampleCode/deleteButton.java}
 \lstinputlisting[language=Java]{./exampleCode/editButton.java}
 \lstinputlisting[language=Java]{./exampleCode/newEntry.java}
 \lstinputlisting[language=Java]{./exampleCode/addEntry.java}
+\lstinputlisting[language=Java]{./exampleCode/closeWindow.java}
 \subsection{Back-End Architecture}
-\subsubsection{Contact Class}
+\subsection{Contact Class}
 The contact class is where all data regarding each entry in the address is kept. This class utilizes strings to hold all information about each entry. 
-
+\subsubsection{Attributes of Contact Class}
 \lstinputlisting[language=Java]{./exampleCode/contactClass.java}
+\textit{This class holds the String data for first name, last name, phone number, email, address, 2nd address, city, state, and ZIP code.}
+\subsubsection{Functions of Contact Class}
 \lstinputlisting[language=Java]{./exampleCode/first.java}
+\textit{Functions: Get or set first name data for a Contact.}\\
+\textit{Precondition: All values are needed for postconditions accessible to this function}\\
+\textit{Postcondition: Contact is either updated with supplied information or is returned as a String.}
 \lstinputlisting[language=Java]{./exampleCode/last.java}
 \lstinputlisting[language=Java]{./exampleCode/phone.java}
 \lstinputlisting[language=Java]{./exampleCode/email.java}
