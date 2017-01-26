@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class AddressBook {
 	private ArrayList<Contact> AB;
@@ -67,14 +68,21 @@ public class AddressBook {
 		return null; // should throw an error or something / prompt target not found
 	}
 	
-	public void Sort(Boolean key) {
-		// 0 = zip
-		// 1 = lastname
-		if (key) {
-			//AB.sort(Comparator<? super Contact> c); ie: Contact.lastname < OtherContact.lastname
-		}
-		else {
-			//AB.sort(Comparator<? super Contact> c); ie: Contact.zipcode < OtherContact.zipcode
-		}
+	public void SortByName() {
+		/*		
+		This method is implemented in the AddressBook class. It uses the COMPARE_BY_NAME comparator in the 
+		Contacts class to sort ArrayList<Contact> AB. This doesnt take any inputs or have any outputs, it 
+		updates the AddressBook object itself.
+		 */
+		Collections.sort(AB, Contact.COMPARE_BY_NAME);
+	}
+	
+	public void SortByZip() {
+		/*		
+		This method is implemented in the AddressBook class. It uses the COMPARE_BY_ZIP comparator 
+		in the Contacts class to sort ArrayList<Contact> AB. This doesnt take any inputs or have any outputs, 
+		it updates the AddressBook object itself.
+		*/
+		Collections.sort(AB, Contact.COMPARE_BY_ZIP);
 	}
 }
