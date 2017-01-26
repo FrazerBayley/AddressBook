@@ -2,6 +2,7 @@ package scheduler;
 
 import java.awt.List;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Contact {
 	/*
@@ -38,6 +39,28 @@ public class Contact {
 		_state = list.get(6);
 		_zip = list.get(7);
 	}
+
+	public static Comparator<Contact> COMPARE_BY_NAME = new Comparator<Contact>() {
+		public int compare(Contact one, Contact other) {
+		/*
+		Returns an integer less than zero, zero, or greater than zero, depending on the lexigraphical comparison of the two strings. First name is used to break ties.
+		*/
+		    int dif = one.getLastName().compareTo(other.getLastName());
+		    if(dif == 0){
+			dif = one.getFirstName().compareTo(other.getFirstName());
+		    }
+		    return dif;
+		}
+	};
+
+	public static Comparator<Contact> COMPARE_BY_ZIP = new Comparator<Contact>() {
+		public int compare(Contact one, Contact other) {
+		/*
+		Returns an integer less than zero, zero, or greater than zero, depending on the lexigraphical comparison of the two strings. 
+		*/
+		    return one.getZip().compareTo(other.getZip());
+		}
+	};
 	
 	
 	public String getFirstName() {
