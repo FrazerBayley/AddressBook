@@ -1,5 +1,8 @@
 package scheduler;
 
+import java.awt.List;
+import java.util.ArrayList;
+
 public class Contact {
 	/*
 	 * Class NewEntry formats user inputed data from GUI into proper categories before storing in arrayList,
@@ -23,6 +26,17 @@ public class Contact {
 		_city = city;
 		_state = state;
 		_zip = zip;
+	}
+	
+	public Contact(ArrayList<String> list){
+		_firstName = list.get(0);
+		_lastName = list.get(1);
+		_phone = list.get(2);
+		_email = list.get(3);
+		_address = list.get(4);
+		_city = list.get(5);
+		_state = list.get(6);
+		_zip = list.get(7);
 	}
 	
 	

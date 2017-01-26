@@ -2,22 +2,37 @@ import java.util.ArrayList;
 
 public class AddressBook {
 	private ArrayList<Contact> AB;
-	private Integer keycount;
 	
 	AddressBook() {
 		AB = new ArrayList<Contact>();
-		keycount = 0;
 	}
 	
 	AddressBook(String filepath) {
 		AB = new ArrayList<Contact>();
-		keycount = 0;
-		//TSV_Reader(filepath);
+		try {
+			TSV_Reader.reader(this, filepath);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// intention: tsv reader will read saved tsv and create contacts to be
 		// added.  Essentially this function is the Open call in the form of
 		// a constructor.  There's no Open method specifically because that
 		// functionality creates a new Addressbook, so Open will belong to the
 		// main program and I assume make a call to Save
+	}
+	
+	public ArrayList<Contact> getBook() {
+		return AB;
+	}
+	
+	public void Open(String filepath) {
+		try {
+			TSV_Reader.reader(this, filepath);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void Save(String filepath) {
@@ -26,8 +41,6 @@ public class AddressBook {
 	}
 	
 	public void Add(Contact data) {
-		data.key = keycount;
-		keycount++;
 		AB.add(data);
 	}
 	
@@ -38,16 +51,16 @@ public class AddressBook {
 		// you can't sort a hash table, which is a required feature.
 		// so removing right now is a VERY slow operation when the
 		// data set gets large.
-		AB.removeIf( i -> { return i.key == data.key; });
+		//AB.removeIf( i -> { return i.key == data.key; });
 	}
 	
-	public Contact SearchBy(Integer key) {
+	public Contact SearchBy(Contact key) {
 		// not sure if the values are sorted in the reference key so
 		// linear search ~ also not sure what functionality to provide here
 		// should I return index location so we can edit the item in place?
 		// should I return the contact object? Should I return the AB key value?
 		for (Contact c : AB) {
-			if (c.key == key) {
+			if (c == key) {
 				return c;
 			}
 		}
