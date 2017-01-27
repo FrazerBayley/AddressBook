@@ -33,6 +33,8 @@
 \begin{versionhistory}
 	\vhEntry{.1}{17.01.17}{Haley Whitman}{Created initial outline of document}
 	\vhEntry{.2}{18.01.17}{Haley Whitman}{Working through document, sections 1 to 2}
+	\vhEntry{.2}{22.01.17}{Haley Whitman}{Finished ConOps}
+	\vhEntry{.2}{23.01.17}{Haley Whitman}{Established the sections 3-8}
 	
 \end{versionhistory}
 \pagebreak
@@ -69,51 +71,243 @@ The rest of this document is broken up into the following subsections.
 \end{itemize}
 
 \section{Concept of Operations}
-\large \textbf{1. Brief Description}\\
-This use case describes how a user interacts with the Address Book to add and edit a new entry of another person. \\
-\large \textbf{2. Actors}\\
-\tab \large  \textbf{2.1 User}\\
-\tab \large  \textbf{2.2 Application}\\
-\large \textbf{3. Preconditions}\\
-The user has a mouse, keyboard, and the Address Book application open and visible on the display. There is enough memory on the computer to handle the size of a typical address book.\\
-\large \textbf{4. Basic Flow of Events}\\
-1. The use case begins when a user prepares to enter an address at the main screen of the Address Book\\
-2. The Address Book presents several options representing different modes, such as "Create a new Contact," "Delete a Contact," "Import an Address Book," and "Export an Address Book."\\ 
-3. The user selects to "Create a new Contact." \\
-4. The Address Book presents the user to fill out information for the new contact.\\
-5. The user fills out the name, address, city, state, zip, phone number, and email address. \\
-6. Once filled out, the Address Book saves this information in the current address file.\\
-7. The user is presented with the main menu mode of the Address Book application.\\
-\large \textbf{5. Alternative Flows}\\
-\textbf{5.1 User not supplying all the information} \\
-If in step 5 the user does not fill out all of the information, then:\\
-\tab 1. The system checks if the first/last name are filled out, if yes, continue to step 6.\\
-\tab 2. If the first and last name are not filled out, stay at step 5 until completed.\\
-\textbf{5.2 User entered an address that conflicts with another address} \\
-If in step 6 the Address Book finds another address is already entered with the same information, then:\\
-\tab 1. The application displays "Current Address is already found in Address Book."\\
-\tab 2. The use case resumes at step 2.
-\large \textbf{6. Key Scenarios}\\
-\large \textbf{7. Post Conditions}\\
-\large \textbf{8. Special Requirements}\\
-
 
 \subsection{System Context}
+The backend of the address book application will be stored in different TSV files that will be used to store address book data. Code is written in Java.\\
+Broadly, the address book is capable of:
+\begin{itemize}
+	\item Importing and Exporting Multiple address books.
+	\item Add, edit, and delete contacts into an address book file.
+	\item Sort, view, and search contacts.
+	\item Hold information such as first and last name, ZIP code, state, phone number, and email address.
+\end{itemize}
 \subsection{System Capabilities}
+\fbox{\begin{minipage}{41em}
+		\large \textbf{1. Brief Description}\\
+		This use case describes how the user loads exports an address book.\\
+		\large \textbf{2. Actors}\\
+		\tab \large  \textbf{2.1 User}\\
+		\tab \large  \textbf{2.2 Application}\\
+		\large \textbf{3. Preconditions}\\
+		The user has a mouse, keyboard, and the Address Book application open and visible on the display, with an address book loaded that the user wishes to export. There is enough memory on the computer to handle the size of a typical address book.\\
+		\large \textbf{4. Basic Flow of Events}\\
+		1. The Address book displays the contacts in the address book.
+		\large \textbf{5. Alternative Flows}\\
+		\large \textbf{5.1 User doesn't find the correct address book they wish to load}\\
+		The user can change the directory to continue searching for an address book.\\
+		\large \textbf{5.2 User loads incorrect address book}\\
+		If in Step 5 the user realizes they loaded the incorrect address book, they can go back to Step 2.\\
+		\large \textbf{6. Post Condition}\\
+		An address book file is created and the application displays a screen to view all of the contacts.
+\end{minipage}}
+\fbox{\begin{minipage}{41em}
+		\large \textbf{1. Brief Description}\\ 
+		This use case describes how the user loads an address book.\\
+		\large \textbf{2. Actors}\\
+		\tab \large  \textbf{2.1 User}\\
+		\tab \large  \textbf{2.2 Application}\\
+		\large \textbf{3. Preconditions}\\
+		The user has a mouse, keyboard, and the Address Book application open and visible on the display, with the address book application just opened. There is enough memory on the computer to handle the size of a typical address book.\\
+		\large \textbf{4. Basic Flow of Events}\\
+		1. The Address Book displays the options to "Open an Address Book" and "Create an Address Book" \\
+		2. User selects to "Open an Address Book".\\
+		3. The Address Book will display the file directory where address books are saved.\\
+		4. User selects the Address Book file they wish to load.\\
+		5. Address book displays displays the contacts from the new address book.\\
+		\large \textbf{5. Alternative Flows}\\
+		\large \textbf{5.1 User doesn't find the correct address book they wish to load}\\
+		The user can change the directory to continue searching for an address book.\\
+		\large \textbf{5.2 User loads incorrect address book}\\
+		If in Step 5 the user realizes they loaded the incorrect address book, they can go back to Step 2.\\
+		\large \textbf{6. Post Condition}\\
+		An address book file is loaded, and the application displays the list of contacts.
+\end{minipage}}
+\fbox{\begin{minipage}{41em}
+		\large \textbf{1. Brief Description}\\
+		This use case describes how the user saves an address book.\\
+		\large \textbf{2. Actors}\\
+		\tab \large  \textbf{2.1 User}\\
+		\tab \large  \textbf{2.2 Application}\\
+		\large \textbf{3. Preconditions}\\
+		The user has a mouse, keyboard, and the Address Book application open and visible on the display, with the address book application opened and changes made by the user. There is enough memory on the computer to handle the size of a typical address book.\\
+		\large \textbf{4. Basic Flow of Events}\\
+		1. The Address Book displays the options to "New", "Open", "Save", "Save as", "Close", and "Quit".\\
+		2. The user selects to "Save as".\\
+		3. Address Book will prompt for a name and file directory to save the file in.\\
+		4. The user inputs name and directory information.\\
+		5. Address book displays confirmation for saving address book.\\
+		\large \textbf{5. Alternative Flows}\\
+		\large \textbf{5.1 User does not wish to save as a new file}\\
+		\\If in step 3 the user does not wish to save anymore, the user can decide to select to exit.
+		\large \textbf{6. Post Condition}\\
+		An address book is saved, and a file is left in the chosen file directory with all of the information that the user saved.
+\end{minipage}}
+\fbox{\begin{minipage}{41em}
+		\large \textbf{1. Brief Description}\\
+		This use case describes how the user searches for a contact. \\
+		\large \textbf{2. Actors}\\
+		\tab \large  \textbf{2.1 User}\\
+		\tab \large  \textbf{2.2 Application}\\
+		\large \textbf{3. Preconditions}\\
+		The user has a mouse, keyboard, and the Address Book application open and visible on the display, with an address book loaded. There is enough memory on the computer to handle the size of a typical address book.\\
+		\large \textbf{4. Basic Flow of Events}\\
+		1. The Address Book displays the contacts.\\
+		2. User selects "Search for User". \\
+		3. Address Book prompts for a User entry of either a name, or zip code.\\
+		4. User enters the name they wish to search.\\
+		5. Address book displays searched name.\\
+		\large \textbf{5. Alternative Flows}\\
+		\large \textbf{5.1 User searches for wrong contact}\\
+		If in step 5 the contact the user wanted does not appear, the user can continue back at Step 2.\\
+		\large \textbf{5.2 Searched user does not exist}\\
+		If in step 5 the user does not find the searched for contact, they can continue back at Step 2 to try a different field. \\
+		\large \textbf{6. Post Condition}\\
+		The application displays the searched for user, giving options to edit and delete said user.
+\end{minipage}}
+
+\fbox{\begin{minipage}{41em}
+		\large \textbf{1. Brief Description}\\
+		This use case describes how the user deletes an address in the address book. \\
+		\large \textbf{2. Actors}\\
+		\tab \large  \textbf{2.1 User}\\
+		\tab \large  \textbf{2.2 Application}\\
+		\large \textbf{3. Preconditions}\\
+		The user has a mouse, keyboard, and the Address Book application open and visible on the display, with an address book loaded. There is enough memory on the computer to handle the size of a typical address book.\\
+		\large \textbf{4. Basic Flow of Events}\\
+		1. The Address Book displays the contacts.\\
+		2. User selects contact.\\
+		3. Address Book prompts for "edit", "view", and "delete".\\
+		4. User selects delete.\\
+		5. Address Book prompts for confirmation.\\
+		6. User confirms.\\
+		\large \textbf{5. Alternative Flows}\\
+		\large \textbf{5.1 User searches for contact.}\\
+		If in step 2, the user searches for the contact, preform \textit{Use Case: Contact Search} and then continue  to step 3.\\
+		\large \textbf{5.2 User Does not want to confirm deletion}\\
+		If in step 5 the user does not wish to delete anymore, user selects to cancel and is brought back to step 1.\\
+		\large \textbf{6. Post Condition}\\
+		The deleted user's information is no longer in the address book file upon saving, but can be allowed to return upon the user's request.
+\end{minipage}}
+
+\fbox{\begin{minipage}{41em}
+		\large \textbf{1. Brief Description}\\
+		This use case describes how a user interacts with the Address Book to add and edit a new entry of another person. \\
+		\large \textbf{2. Actors}\\
+		\tab \large  \textbf{2.1 User}\\
+		\tab \large  \textbf{2.2 Application}\\
+		\large \textbf{3. Preconditions}\\
+		The user has a mouse, keyboard, and the Address Book application open and visible on the display. There is enough memory on the computer to handle the size of a typical address book.\\
+		\large \textbf{4. Basic Flow of Events}\\
+		1. The use case begins when a user prepares to enter an address at the main screen of the Address Book\\
+		2. The Address Book presents several options representing different modes, such as "Create a new Contact," "Delete a Contact," "Import an Address Book," and "Export an Address Book."\\ 
+		3. The user selects to "Create a new Contact." \\
+		4. The Address Book presents the user to fill out information for the new contact.\\
+		5. The user fills out the name, address, city, state, zip, phone number, and email address. \\
+		6. Once filled out, the Address Book saves this information in the current address file.\\
+		7. The user is presented with the main menu mode of the Address Book application.\\
+		\large \textbf{5. Alternative Flows}\\
+		\textbf{5.1 User not supplying all the information} \\
+		If in step 5 the user does not fill out all of the information, then:\\
+		\tab 1. The system checks if the first/last name are filled out, if yes, continue to step 6.\\
+		\tab 2. If the first and last name are not filled out, stay at step 5 until completed.\\
+		\textbf{5.2 User entered an address that conflicts with another address} \\
+		If in step 6 the Address Book finds another address is already entered with the same information, then:\\
+		\tab 1. The application displays "Current Address is already found in Address Book."\\
+		\tab 2. The use case resumes at step 2. \\
+		\large \textbf{6. Post Condition}\\
+		
+\end{minipage}}
+
 
 \section{Behavioral Requirements}
 \subsection{System Inputs and Outputs}
-\subsubsection{System Inputs and Outputs}
+\subsubsection{Inputs}
+\begin{itemize}
+	\item \textbf{Import/Export Buttons: }User clickable, and brings up a file directory.
+	\item \textbf{Close: }Either (1) if in edit contact, will close the pop-up menu for the text field entries, or (2) if viewing the entire book, will close the currently open book.
+	\item \textbf{Quit: }Only available if viewing contacts, this will close the program.
+	\item \textbf{New: }Only available if viewing contacts, will create a new address book. This will prompt to save the currently loaded address book.
+	\item \textbf{Open: }Only available if viewing contacts, will display a file directory of a list of currently available address book files.
+	\item \textbf{Save: }Will save the current address book file.
+	\item \textbf{Save As: }Will save the current address book file, with the option of saving it as a new separate file.
+	\item \textbf{Add: }Will create the pop up to allow new entries in the address book file.
+	\item \textbf{Edit: }Once a contact is selected, this will allow to change any fields in the contact.
+	\item \textbf{Delete: }Will delete the currently selected contact.
+	\item \textbf{Text Fields: }Will allow the user to click or tab through entries, and fill them out with alphanumeric letters.
+	\item \textbf{Sort By: }Will allow the user to choose sorting the contact list by name or phone number.
+\end{itemize}
 \subsubsection{Outputs}
-\subsection{Detailed Output Behavior}
+\begin{itemize}
+	\item \textbf{Display Contacts: } Address book returns a list of contacts that are found the TSV file.
+	\item \textbf{Display Editing Contact: } A pop-up menu, with text fields to edit Names, phone numbers, email addresses, ZIP codes, State, and street name for the selected contact.
+	\item \textbf{Display File Directory: }Directed by the operating system, can be used to manage what field is loaded, or the exported file's name.
+\end{itemize}
 
 \section{Quality Requirements}
-\subsection{Change Log}
+\begin{itemize}
+	\item \textbf{Performance}
+	\begin{itemize}
+		\item The address book needs to load and export address book files quickly, and respond to user requests such as sorting and adding new entries in less than 500ms.
+	\end{itemize}
+	\item \textbf{Reliability}
+	\begin{itemize}
+		\item Application should ensure that the user not unknowingly delete any data.
+		\item File locations should be saved, so the user does not have to search for where they are saved.
+	\end{itemize}
+	\item \textbf{Standards}
+	\begin{itemize}
+		\item The address book will require a certain amount of information, or will not accept an entry into the complete address book file.
+	\end{itemize}
+		\item \textbf{Consistency}
+	\begin{itemize}
+		\item The address book needs to be able to change over time, allowing for deletion, and editing, of any contact.
+	\end{itemize}
+	\item \textbf{Ease of Change}
+	\begin{itemize}
+	\item The code itself should be modular and follow good object oriented coding practices. This will ensure that future developments can be easily adapted to the code.	
+	\end{itemize}
+
+\end{itemize}
 \section{Expected Subsets}
+\begin{itemize}
+	\item \textbf{Subset 1:}
+	\begin{itemize}
+		\item Implement basic interaction with a GUI. Needs to be able to save to an external backend file.
+		\item Add an address to the address book.
+		\item Retrieve/view an address.
+	\end{itemize}
+\end{itemize}
+
+\begin{itemize}
+	\item \textbf{Subset 2:}
+	\begin{itemize}
+		\item All previous subset requirements, plus:
+		\item Store standard postal address and phone number.
+		\item Sort addresses by name or zip.
+		\item Edit, save, and recall addresses.
+		\item Separate GUI to enter address information.
+	\end{itemize}
+\end{itemize}
+
+\begin{itemize}
+	\item \textbf{Subset 3:}
+	\begin{itemize}
+		\item All previous subset requirements, plus:
+		\item Import/Export standard TSV files of addresses.
+		\item Ability to search the address book.
+	\end{itemize}
+\end{itemize}
 
 \section{Fundamental Assumptions}
+We expect that the user is loading this Java application on a Windows 8+ or OSX computer. The user needs a keyboard, mouse, and display as well to properly use the computer. This program is compiled with JDK 8. 
 
 \section{Expected Changes}
+There are several requirements that may change after meeting with the customer after every iteration. Possibilities include: 
+\begin{itemize}
+	\item The schedule of deliverables before the final deliverable date. This may change based on the group figuring out their working schedule.
+	\item User Interface design may change, to allow for changes based on the customer's preferences. Most likely these changes will be due to how information gets saved in the address book, and the functionality behind prompting the user for saving.
+	\item Formatting of the TSV file has been unspecified, and will likely be due to change as per customer's request.
+\end{itemize}
 
 \section{Appendices}
 
@@ -129,7 +323,7 @@ If in step 6 the Address Book finds another address is already entered with the 
 		\hline
 		SRS & Software Requirement Specification  \\
 		\hline
-		cell7 & cell8 \\
+		TSV & Tab-Separated-Values \\
 		\hline
 	\end{tabular}
 

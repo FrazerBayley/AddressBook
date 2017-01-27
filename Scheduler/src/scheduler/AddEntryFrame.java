@@ -13,17 +13,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class AddressEntryFrame extends JFrame {
+public class AddEntryFrame extends JFrame {
 	/*
 	 * Constructor
 	 * Allows interaction between the program and the user.
 	 */
-	ArrayList<NewEntry> newEntryList = new ArrayList<>();
-	private JButton _addButton, _closeButton, _editButton, _deleteButton;
-	private JLabel _firstNameLbl, _lastNameLbl, _phoneLbl, _emailLbl, _addressLbl, _cityLbl, _stateLbl, _zipLbl;
-	private JTextField _firstNameTxt, _lastNameTxt, _phoneTxt, _emailTxt, _addressTxt, _cityTxt, _stateTxt, _zipTxt;
+	private JButton _saveButton, _closeButton, _editButton, _deleteButton;
+	private JLabel _firstNameLbl, _lastNameLbl, _phoneLbl, _emailLbl, _address1Lbl, _address2Lbl, _cityLbl, _stateLbl, _zipLbl;
+	private JTextField _firstNameTxt, _lastNameTxt, _phoneTxt, _emailTxt, _address1Txt, _address2Txt, _cityTxt, _stateTxt, _zipTxt;
 	
-	public AddressEntryFrame() {
+	public AddEntryFrame() {
 		/*
 		 * Sets up GUI text fields, labels, and buttons.
 		 */
@@ -32,7 +31,7 @@ public class AddressEntryFrame extends JFrame {
 		
 		setLayout(new BorderLayout());
 
-		JPanel textPane = new JPanel(new GridLayout(8, 2));
+		JPanel textPane = new JPanel(new GridLayout(9, 2));
 		add(textPane, BorderLayout.NORTH);
 		
 		_firstNameLbl = new JLabel("First Name:");
@@ -55,10 +54,15 @@ public class AddressEntryFrame extends JFrame {
 		textPane.add(_emailLbl);
 		textPane.add(_emailTxt);
 		
-		_addressLbl = new JLabel("Address:");
-		_addressTxt = new JTextField("");
-		textPane.add(_addressLbl);
-		textPane.add(_addressTxt);
+		_address1Lbl = new JLabel("Address 1:");
+		_address1Txt = new JTextField("");
+		textPane.add(_address1Lbl);
+		textPane.add(_address1Txt);
+
+		_address2Lbl = new JLabel("Address 2:");
+		_address2Txt = new JTextField("");
+		textPane.add(_address2Lbl);
+		textPane.add(_address2Txt);		
 		
 		_cityLbl  = new JLabel("City:"); 
 		_cityTxt  = new JTextField("");
@@ -87,22 +91,24 @@ public class AddressEntryFrame extends JFrame {
 			
 		});
 		
-		_addButton = new JButton("Add");
-		buttonPane.add(_addButton);
-		_addButton.addActionListener(new ActionListener() {
+		_saveButton = new JButton("Save");
+		buttonPane.add(_saveButton);
+		_saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				addEntry();
+				//addEntry();
 			}
 			
 		});
 		
 		_editButton = new JButton("Edit");
 		buttonPane.add(_editButton);
+		_editButton.setEnabled(false);
 		
 		_deleteButton = new JButton("Delete");
 		buttonPane.add(_deleteButton);
+		_deleteButton.setEnabled(false);
 		
-		setSize(500,275);
+		setSize(500,300);
 	}
 	
 	public void closeWindow() {
@@ -115,52 +121,41 @@ public class AddressEntryFrame extends JFrame {
 		int dialogButton = JOptionPane.YES_NO_CANCEL_OPTION;
 		int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to add contact before closing?");
 		if (dialogResult == JOptionPane.YES_OPTION) {
-			addEntry();
+			//addEntry();
 		}
 		if (dialogResult == JOptionPane.NO_OPTION) {
 			System.exit(0);
 		}
 	}
 	
-	public void addEntry() {
+	public void addEntry(ArrayList<Contact> addressBook) {
 		/*
 		 * Method addEntry() takes user inputed data from GUI and saves it 
 		 * to an array list. 
 		 */
-		String fn, ln, phone, email, address, city, state, zip;
+		String fn, ln, phone, email, address1, address2, city, state, zip;
 		fn = _firstNameTxt.getText();
-		if (fn.equals("")) {
-			JOptionPane.showMessageDialog(null, "Please enter First Name");
-			return;
-		}
-		
 		ln = _lastNameTxt.getText();
-		if (ln.equals("")) {
-			JOptionPane.showMessageDialog(null, "Please enter Last Name");
+		if (ln.equals("") && fn.equals("")) {
+			JOptionPane.showMessageDialog(null, "Please enter a first or last name.");
 			return;
 		}
 		
 		phone = _phoneTxt.getText();
 		email = _emailTxt.getText();
-		address = _addressTxt.getText();
+		address1 = _address1Txt.getText();
+		address2 = _address2Txt.getText();
 		city = _cityTxt.getText();
 		state = _stateTxt.getText();
 		zip = _zipTxt.getText();
-		if (zip.equals("")) {
-			JOptionPane.showMessageDialog(null, "Please enter ZIP code");
+		if (phone.equals("") && email.equals("") && address1.equals("") && address2.equals("") && city.equals("") && state.equals("") && zip.equals("")) {
+			JOptionPane.showMessageDialog(null, "Please enter at least one additional category");
 			return;
 		}
 		
-		NewEntry ne = new NewEntry(fn, ln, phone, email, address, city, state, zip);
-		newEntryList.add(ne);
+		Contact ne = new Contact(fn, ln, phone, email, address1, address2, city, state, zip);
+		addressBook.add(ne);
 		JOptionPane.showMessageDialog(null, "Person Saved");
-		/*	
-		for (int i = 0; i < newEntryList.size(); i++) {
-			System.out.println(newEntryList.get(i).getFirstName());
-			System.out.println(newEntryList.get(i).getLastName());
-			System.out.println(newEntryList.get(i).getPhone());
-			System.out.println(newEntryList.get(i).getEmail());
-			System.out.println(newEntryList.get(i).getAddress());
-		}*/
+		
 	}
 }
