@@ -1,3 +1,4 @@
+package scheduler;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -8,6 +9,8 @@ public class TSV_Reader {
 		// need to assert that filepath ends in .tsv
 		Scanner TSVFile = new Scanner(new File(filepath));
 		ArrayList<String> dataArray = new ArrayList<String>();
+		if (TSVFile.hasNextLine())
+			TSVFile.nextLine();
 		while (TSVFile.hasNextLine()) {
 			String line = TSVFile.nextLine();
 			Scanner lineScanner = new Scanner(line);
@@ -15,7 +18,7 @@ public class TSV_Reader {
 			while(lineScanner.hasNext()) {
 				dataArray.add(lineScanner.next().trim());
 			}
-			if (dataArray.size() == 7) {
+			if (dataArray.size() == 8) {
 				dataArray.add("");
 			}
 			Contact ce = new Contact(dataArray);

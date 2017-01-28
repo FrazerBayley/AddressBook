@@ -287,6 +287,7 @@ public class MainFrame {
 	    		if (userSelection == JFileChooser.APPROVE_OPTION) {
 	    		    File fileToSave = fileChooser.getSelectedFile();
 	    		    System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+	    		    AB.Save(fileToSave.getAbsolutePath());
 	    		}
 	    	}
 	    });
