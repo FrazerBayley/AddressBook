@@ -17,15 +17,16 @@ public class TSV_Writer {
 		          new FileOutputStream(filepath), "utf-8"));
 		    
 		    ArrayList<Contact> book = ab.getBook();
-		    writer.write("FirstName");
-		    writer.write("LastName");
-		    writer.write("Phone");
-		    writer.write("Email");
+		    writer.write("FirstName" + "\t");
+		    writer.write("LastName" + "\t");
+		    writer.write("Phone" + "\t");
+		    writer.write("Email" + "\t");
 		    // aziz : address 1 and 2 added
-		    writer.write("Address 1");
-		    writer.write("Address 2");
-		    writer.write("State");
-		    writer.write("Zip");
+		    writer.write("Address 1" + "\t");
+		    writer.write("Address 2" + "\t");
+		    writer.write("City" + "\t");
+		    writer.write("State" + "\t");
+		    writer.write("Zip" + "\n");
 		    
 		    for (Contact c : book) {
 		    	writer.write(c.getFirstName() + "\t");
@@ -36,6 +37,7 @@ public class TSV_Writer {
 		    	writer.write(c.getAddress1() + "\t");
 		    	writer.write(c.getAddress2() + "\t");
 		    	writer.write(c.getState() + "\t");
+		    	writer.write(c.getCity() + "\t");
 		    	writer.write(c.getZip()  + "\n");
 		    }
 		} catch (IOException ex) {
