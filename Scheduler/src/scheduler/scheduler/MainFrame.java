@@ -21,6 +21,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JRadioButton;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MainFrame {
 
@@ -28,6 +30,7 @@ public class MainFrame {
     private JTable table;
     private JMenuBar menuBar;
     JScrollPane scrollPane;
+    
     public static String index;
     public static int txtBookNum = 1;
  // column title
@@ -35,8 +38,21 @@ public class MainFrame {
 			                "Last Name",
 			                "Zip Code",
 			                "index"};
-	AddressBook AB;
+	private AddressBook AB;
 
+
+	public AddressBook getAB() {
+		return AB;
+	}
+
+	public void setAB(AddressBook aB) {
+		AB = aB;
+		showContacts(AB.getBook());
+	}
+	
+	public void refreshAB() {
+		showContacts(AB.getBook());
+	}
 
 	/**
 	 * Launch the application.
@@ -84,6 +100,22 @@ public class MainFrame {
 		frame.getContentPane().add(scrollPane);
 		String s[][] = {{"No Entry","",""}};
 		table = new JTable(s, columnNames);
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2 && !e.isConsumed()) {
+				     e.consume();
+				     //handle double click event.
+				     int selectedRowIndex = table.getSelectedRow();
+					int selectedColumnIndex = table.getSelectedColumn();
+						String selectedObject = (String) table.getModel().getValueAt(selectedRowIndex, 0);
+						index = selectedObject;
+						//new secFrame().setVisible(true);
+						JOptionPane.showMessageDialog(frame,
+							    "you selected "+selectedObject);
+				}
+			}
+		});
 		// disable the ability to drag the columns
 		table.getTableHeader().setReorderingAllowed(false);
 
@@ -104,7 +136,7 @@ public class MainFrame {
 		btnAddNewContact.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// open the add window
-				//new secFrame().setVisible(true);
+				addEntry();
 				
 			}
 		});
@@ -159,6 +191,11 @@ public class MainFrame {
 		group.add(rdbtnZipCode);
 	}
 	
+	protected void addEntry() {
+		// TODO Auto-generated method stub
+		new AddEntryFrame(this).setVisible(true);
+	}
+
 	public static Comparator<Contact> COMPARE_BY_NAME = new Comparator<Contact>() {
         public int compare(Contact one, Contact other) {
         	/*
@@ -193,7 +230,7 @@ public class MainFrame {
 
 
 	
-	private void showContacts(ArrayList<Contact> contacts){
+	public void showContacts(ArrayList<Contact> contacts){
 				// make the table scrollable
 				
 				
@@ -206,7 +243,7 @@ public class MainFrame {
 						data[key][0] = c.getFirstName();
 					}
 					data[key][1] = c.getZip();
-					data[key][2] = key;
+					//data[key][2] = key;
 					key++;
 				}
 				
@@ -274,7 +311,7 @@ public class MainFrame {
 	    fileMenu.add(openMenuItem);
 	    
 	    // File->Save, N - Mnemonic
-	    JMenuItem saveMenuItem = new JMenuItem("Save", null);
+	    JMenuItem saveMenuItem = new JMenuItem("Save As", null);
 	    saveMenuItem.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	    		// save
@@ -287,7 +324,7 @@ public class MainFrame {
 	    		if (userSelection == JFileChooser.APPROVE_OPTION) {
 	    		    File fileToSave = fileChooser.getSelectedFile();
 	    		    System.out.println("Save as file: " + fileToSave.getAbsolutePath());
-	    		    AB.Save(fileToSave.getAbsolutePath());
+	    		    AB.Save(fileToSave.getAbsolutePath().toString());
 	    		}
 	    	}
 	    });
