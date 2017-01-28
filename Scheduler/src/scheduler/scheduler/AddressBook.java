@@ -56,6 +56,10 @@ public class AddressBook {
 		//AB.removeIf( i -> { return i.key == data.key; });
 	}
 	
+	public Contact getContact(Integer index) {
+		return AB.get(index);
+	}
+	
 	public Contact SearchBy(Contact key) {
 		// not sure if the values are sorted in the reference key so
 		// linear search ~ also not sure what functionality to provide here

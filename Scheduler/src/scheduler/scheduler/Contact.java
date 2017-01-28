@@ -34,15 +34,15 @@ public class Contact {
 	
 	// aziz: added a _address1 and _address2 insted of _address
 	public Contact(ArrayList<String> list){
-		_firstName = list.get(0);
-		_lastName = list.get(1);
-		_phone = list.get(2);
+		_firstName = list.get(7);
+		_lastName = list.get(6);
+		_phone = list.get(8);
 		_email = list.get(3);
 		_address1 = list.get(4);
 		_address2 = list.get(5);
-		_city = list.get(6);
-		_state = list.get(7);
-		_zip = list.get(8);
+		_city = list.get(0);
+		_state = list.get(1);
+		_zip = list.get(2);
 	}
 
 	public static Comparator<Contact> COMPARE_BY_NAME = new Comparator<Contact>() {
