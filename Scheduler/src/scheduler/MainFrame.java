@@ -78,8 +78,7 @@ public class MainFrame {
 		String fileName = "Address Book "+ txtBookNum;
 		frame.setTitle(fileName);
 		AB = new AddressBook();
-		// TODO get address book
-		//ArrayList<Contact> contacts = AB.getAB();
+		ArrayList<Contact> contacts = AB.getBook();
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(30, 64, 385, 167);
 		frame.getContentPane().add(scrollPane);
@@ -134,8 +133,7 @@ public class MainFrame {
 		JRadioButton rdbtnName = new JRadioButton("Name");
 		rdbtnName.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO get address book
-				ArrayList<Contact> c = null;//AB.getAB();
+				ArrayList<Contact> c = AB.getBook();
 				c.sort(COMPARE_BY_NAME);
 				showContacts(c);
 			}
@@ -147,8 +145,7 @@ public class MainFrame {
 		JRadioButton rdbtnZipCode = new JRadioButton("Zip Code");
 		rdbtnZipCode.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO get address book
-				ArrayList<Contact> c = null;//AB.getAB();
+				ArrayList<Contact> c = AB.getBook();
 				c.sort(COMPARE_BY_ZIP);
 				showContacts(c);
 			}
@@ -202,16 +199,15 @@ public class MainFrame {
 				
 				// get all the contacts here
 				Object[][] data = new Object[contacts.size()][3];
-				int i = 0;
+				int key = 0;
 				for (Contact c : contacts){
-					data[i][0] = c.getLastName();
+					data[key][0] = c.getLastName();
 					if (c.getLastName().equals("")){
-						data[i][0] = c.getFirstName();
+						data[key][0] = c.getFirstName();
 					}
-					data[i][1] = c.getZip();
-					// TODO get the key
-					//data[i][2] = c.key;
-					i++;
+					data[key][1] = c.getZip();
+					data[key][2] = key;
+					key++;
 				}
 				
 				// to disable cell edit
@@ -229,7 +225,6 @@ public class MainFrame {
 	
 	// setup the menu bar
 	private void setupMenuBar() {
-		// TODO Auto-generated method stub
 		// File Menu, F - Mnemonic
 	    JMenu fileMenu = new JMenu("File");
 	    menuBar.add(fileMenu);
@@ -266,9 +261,10 @@ public class MainFrame {
 //	    		  System.out.println("getCurrentDirectory(): " + chooser.getCurrentDirectory());
 //	    		  System.out.println("getSelectedFile() : " + chooser.getSelectedFile());
 	    			
-	    			// TODO open an address book
-	    			//AB = new AddressBook(chooser.getSelectedFile().toString());
-	    			//showContacts(AB.getAB());
+	    			
+	    			AB = new AddressBook(chooser.getSelectedFile().toString());
+	    			
+	    			showContacts(AB.getBook());
 	    		} else {
 	    		  System.out.println("No Selection ");
 	    		}
