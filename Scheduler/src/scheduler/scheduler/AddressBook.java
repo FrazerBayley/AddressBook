@@ -4,6 +4,7 @@ import java.util.Collections;
 
 public class AddressBook {
 	private ArrayList<Contact> AB;
+	private String filepath;
 	
 	AddressBook() {
 		AB = new ArrayList<Contact>();
@@ -91,5 +92,11 @@ public class AddressBook {
 		it updates the AddressBook object itself.
 		*/
 		Collections.sort(AB, Contact.COMPARE_BY_ZIP);
+	}
+	public String getFilePath() {
+		return filepath;
+	}
+	public void setFilePath(String fp) {
+		filepath = fp;
 	}
 }
