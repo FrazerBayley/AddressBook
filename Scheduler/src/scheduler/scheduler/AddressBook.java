@@ -18,15 +18,6 @@ public class AddressBook {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		// intention: tsv reader will read saved tsv and create contacts to be
-		// added.  Essentially this function is the Open call in the form of
-		// a constructor.  There's no Open method specifically because that
-		// functionality creates a new Addressbook, so Open will belong to the
-		// main program and I assume make a call to Save
-	}
-	
-	public ArrayList<Contact> getBook() {
-		return AB;
 	}
 	
 	public void Open(String filepath) {
@@ -39,41 +30,82 @@ public class AddressBook {
 	}
 	
 	public boolean Save(String filepath) {
+		/* If writer is successful at exporting
+		 * it will return true, this can be used for
+		 * creating user notification and error
+		 * handling.
+		 */
 		if (TSV_Writer.writer(this, filepath))
 			return true;
 		return false;
-		// intention: write out the contacts in TSV format to be retrieved later.
 	}
 	
 	public void Add(Contact data) {
 		AB.add(data);
 	}
 	
-	public void Delete(Contact data) {
-		// since we don't know how it is sorted we must check
-		// all elements for the matching key
-		// hash table would be great for adding / removing but
-		// you can't sort a hash table, which is a required feature.
-		// so removing right now is a VERY slow operation when the
-		// data set gets large.
-		//AB.removeIf( i -> { return i.key == data.key; });
+	public void Delete(Integer index) {
+		AB.remove(index);
+	}
+
+	public ArrayList<Contact> getBook() {
+		return AB;
 	}
 	
 	public Contact getContact(Integer index) {
 		return AB.get(index);
 	}
 	
-	public Contact SearchBy(Contact key) {
-		// not sure if the values are sorted in the reference key so
-		// linear search ~ also not sure what functionality to provide here
-		// should I return index location so we can edit the item in place?
-		// should I return the contact object? Should I return the AB key value?
+	public String getFilePath() {
+		return filepath;
+	}
+	
+	public void setFilePath(String fp) {
+		filepath = fp;
+	}
+	
+	public ArrayList<Contact> Search(String term) {
+		// might be able to rearrange search terms for
+		// the most probable terms being searched first
+		ArrayList<Contact> rv = new ArrayList<Contact>();
 		for (Contact c : AB) {
-			if (c == key) {
-				return c;
+			if (c.getAddress1().contains(term)) {
+				rv.add(c);
+				break;
+			}
+			if (c.getAddress2().contains(term)) {
+				rv.add(c);
+				break;
+			}
+			if (c.getCity().contains(term)) {
+				rv.add(c);
+				break;
+			}
+			if (c.getState().contains(term)) {
+				rv.add(c);
+				break;
+			}
+			if (c.getZip().contains(term)) {
+				rv.add(c);
+				break;
+			}
+			if (c.getEmail().contains(term)) {
+				rv.add(c);
+				break;
+			}
+			if (c.getFirstName().contains(term)) {
+				rv.add(c);
+				break;
+			}
+			if (c.getLastName().contains(term)) {
+				rv.add(c);
+				break;
+			}
+			if (c.getPhone().contains(term)) {
+				rv.add(c);
 			}
 		}
-		return null; // should throw an error or something / prompt target not found
+		return rv;
 	}
 	
 	public void SortByName() {
@@ -92,11 +124,5 @@ public class AddressBook {
 		it updates the AddressBook object itself.
 		*/
 		Collections.sort(AB, Contact.COMPARE_BY_ZIP);
-	}
-	public String getFilePath() {
-		return filepath;
-	}
-	public void setFilePath(String fp) {
-		filepath = fp;
 	}
 }
