@@ -19,13 +19,13 @@ public class TSV_Writer {
 		    ArrayList<Contact> book = ab.getBook();
 		    writer.write("CITY" + "\t");
 		    writer.write("STATE" + "\t");
-		    writer.write("ZIP" + "\n");
+		    writer.write("ZIP" + "\t");
 		    writer.write("Email" + "\t");
 		    writer.write("Delivery" + "\t");
 		    writer.write("Second" + "\t");
 		    writer.write("FirstName" + "\t");
 		    writer.write("LastName" + "\t");
-		    writer.write("Phone" + "\t");
+		    writer.write("Phone" + "\n");
 		    // aziz : address 1 and 2 added
 
 
