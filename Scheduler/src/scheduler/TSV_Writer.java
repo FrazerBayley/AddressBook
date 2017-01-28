@@ -1,3 +1,4 @@
+package scheduler;
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -20,7 +21,9 @@ public class TSV_Writer {
 		    writer.write("LastName");
 		    writer.write("Phone");
 		    writer.write("Email");
-		    writer.write("Address");
+		    // aziz : address 1 and 2 added
+		    writer.write("Address 1");
+		    writer.write("Address 2");
 		    writer.write("State");
 		    writer.write("Zip");
 		    
@@ -29,7 +32,9 @@ public class TSV_Writer {
 		    	writer.write(c.getLastName() + "\t");
 		    	writer.write(c.getPhone() + "\t");
 		    	writer.write(c.getEmail() + "\t");
-		    	writer.write(c.getAddress() + "\t");
+		    	// aziz : address 1 and 2 added
+		    	writer.write(c.getAddress1() + "\t");
+		    	writer.write(c.getAddress2() + "\t");
 		    	writer.write(c.getState() + "\t");
 		    	writer.write(c.getZip()  + "\n");
 		    }
