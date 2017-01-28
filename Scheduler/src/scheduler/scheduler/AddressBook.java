@@ -37,8 +37,10 @@ public class AddressBook {
 		}
 	}
 	
-	public void Save(String filepath) {
-		TSV_Writer.writer(this, filepath);
+	public boolean Save(String filepath) {
+		if (TSV_Writer.writer(this, filepath))
+			return true;
+		return false;
 		// intention: write out the contacts in TSV format to be retrieved later.
 	}
 	
