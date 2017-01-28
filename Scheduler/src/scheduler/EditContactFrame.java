@@ -173,7 +173,8 @@ public class EditContactFrame extends JFrame {
 		_phoneTxt.setText(ne.getPhone());
 		_emailTxt.setText(ne.getEmail());
 		_address1Txt.setText(ne.getAddress1());
-		_address2Txt.setText(ne.getAddress1());
+		// changed _address2Txt.setText(ne.getAddress1()); to _address2Txt.setText(ne.getAddress2());
+		_address2Txt.setText(ne.getAddress2());
 		_cityTxt.setText(ne.getCity());
 		_stateTxt.setText(ne.getState());
 		_zipTxt.setText(ne.getZip());
