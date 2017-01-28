@@ -13,22 +13,27 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+
+
 public class AddEntryFrame extends JFrame {
 	/*
 	 * Constructor
 	 * Allows interaction between the program and the user.
 	 */
-	ArrayList<Contact> addressBook;
+	AddressBook addressBook;
+	MainFrame mainFrame;
 	private JButton _saveButton, _closeButton, _editButton, _deleteButton;
 	private JLabel _firstNameLbl, _lastNameLbl, _phoneLbl, _emailLbl, _address1Lbl, _address2Lbl, _cityLbl, _stateLbl, _zipLbl;
 	private JTextField _firstNameTxt, _lastNameTxt, _phoneTxt, _emailTxt, _address1Txt, _address2Txt, _cityTxt, _stateTxt, _zipTxt;
 	
-	public AddEntryFrame(ArrayList<Contact> arrayList) {
+	public AddEntryFrame(MainFrame _mainFrame) {
 		/*
 		 * Sets up GUI text fields, labels, and buttons.
 		 */
 		super("New Entry");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainFrame = _mainFrame;
+		addressBook = mainFrame.getAB();
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		setLayout(new BorderLayout());
 
@@ -96,7 +101,8 @@ public class AddEntryFrame extends JFrame {
 		buttonPane.add(_saveButton);
 		_saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//addEntry();
+				addEntry();
+				
 			}
 			
 		});
@@ -124,7 +130,10 @@ public class AddEntryFrame extends JFrame {
 			//addEntry();
 		}
 		if (dialogResult == JOptionPane.NO_OPTION) {
-			System.exit(0);
+			//System.exit(0);
+			
+			this.dispose();
+			
 		}
 	}
 	
@@ -154,8 +163,12 @@ public class AddEntryFrame extends JFrame {
 		}
 		
 		Contact ne = new Contact(fn, ln, phone, email, address1, address2, city, state, zip);
-		addressBook.add(ne);
+		addressBook.Add(ne);
+		//mainFrame.setAB(addressBook);
+		mainFrame.refreshAB();
+		this.dispose();
 		JOptionPane.showMessageDialog(null, "Contact Saved");
+		
 		
 	}
 }
