@@ -26,9 +26,6 @@ public class TSV_Writer {
 		    writer.write("FirstName" + "\t");
 		    writer.write("LastName" + "\t");
 		    writer.write("Phone" + "\n");
-		    // aziz : address 1 and 2 added
-
-
 		    
 		    for (Contact c : book) {
 		    	writer.write(c.getFirstName() + "\t");
