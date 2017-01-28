@@ -23,21 +23,21 @@ public class TSV_Writer {
 		    writer.write("Email" + "\t");
 		    writer.write("Delivery" + "\t");
 		    writer.write("Second" + "\t");
-		    writer.write("FirstName" + "\t");
 		    writer.write("LastName" + "\t");
+		    writer.write("FirstName" + "\t");
 		    writer.write("Phone" + "\n");
 		    
 		    for (Contact c : book) {
-		    	writer.write(c.getFirstName() + "\t");
-		    	writer.write(c.getLastName() + "\t");
-		    	writer.write(c.getPhone() + "\t");
+		    	writer.write(c.getCity() + "\t");
+		    	writer.write(c.getState() + "\t");
+		    	writer.write(c.getZip()  + "\t");
 		    	writer.write(c.getEmail() + "\t");
-		    	// aziz : address 1 and 2 added
 		    	writer.write(c.getAddress1() + "\t");
 		    	writer.write(c.getAddress2() + "\t");
-		    	writer.write(c.getState() + "\t");
-		    	writer.write(c.getCity() + "\t");
-		    	writer.write(c.getZip()  + "\n");
+		    	writer.write(c.getLastName() + "\t");
+		    	writer.write(c.getFirstName() + "\t");
+		    	writer.write(c.getPhone() + "\n");
+		    		    	
 		    }
 		} catch (IOException ex) {
 			return false;

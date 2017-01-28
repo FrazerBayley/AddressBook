@@ -14,6 +14,9 @@ public class TSV_Reader {
 		while (TSVFile.hasNextLine()) {
 			String line = TSVFile.nextLine();
 			Scanner lineScanner = new Scanner(line);
+			if (line.startsWith("\t")) {
+				dataArray.add("");
+			}
 			lineScanner.useDelimiter("\t");
 			while(lineScanner.hasNext()) {
 				dataArray.add(lineScanner.next().trim());
