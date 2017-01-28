@@ -1,3 +1,4 @@
+package scheduler;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -7,21 +8,34 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.awt.event.ActionEvent;
-import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.JRadioButton;
+import javax.swing.JLabel;
+import java.awt.Font;
 
 public class MainFrame {
 
 	private JFrame frame;
     private JTable table;
     private JMenuBar menuBar;
+    JScrollPane scrollPane;
     public static String index;
     public static int txtBookNum = 1;
+ // column title
+	private String[] columnNames = {
+			                "Last Name",
+			                "Zip Code",
+			                "index"};
+	AddressBook AB;
 
 
 	/**
@@ -63,36 +77,14 @@ public class MainFrame {
 		// set the title
 		String fileName = "Address Book "+ txtBookNum;
 		frame.setTitle(fileName);
-		
-		// make the table scrollable
-		JScrollPane scrollPane = new JScrollPane();
+		AB = new AddressBook();
+		// TODO get address book
+		//ArrayList<Contact> contacts = AB.getAB();
+		scrollPane = new JScrollPane();
 		scrollPane.setBounds(30, 64, 385, 167);
 		frame.getContentPane().add(scrollPane);
-		
-		
-		// column title
-		String[] columnNames = {
-				                "Last Name",
-				                "Zip Code",
-				                "index"};
-		
-		// get all the contacts here
-		Object[][] data = {
-			    {"aziz", "97401", new Integer(123)},
-			    {"John", "97405", new Integer(125)}
-			};
-		
-		// to disable cell edit
-		DefaultTableModel tableModel = new DefaultTableModel(data, columnNames) {
-
-		    @Override
-		    public boolean isCellEditable(int row, int column) {
-		       //all cells false
-		       return false;
-		    }
-		};
-		table = new JTable();
-		table.setModel(tableModel);
+		String s[][] = {{"No Entry","",""}};
+		table = new JTable(s, columnNames);
 		// disable the ability to drag the columns
 		table.getTableHeader().setReorderingAllowed(false);
 
@@ -108,11 +100,13 @@ public class MainFrame {
 		
 		scrollPane.setViewportView(table);
 		
+		
 		JButton btnAddNewContact = new JButton("Add new contact");
 		btnAddNewContact.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// open the add window
 				//new secFrame().setVisible(true);
+				
 			}
 		});
 		btnAddNewContact.setBounds(295, 23, 149, 29);
@@ -123,20 +117,115 @@ public class MainFrame {
 			public void actionPerformed(ActionEvent e) {
 				int selectedRowIndex = table.getSelectedRow();
 				int selectedColumnIndex = table.getSelectedColumn();
-				String selectedObject = (String) table.getModel().getValueAt(selectedRowIndex, 1);
+				String selectedObject = (String) table.getModel().getValueAt(selectedRowIndex, 0);
 				index = selectedObject;
 				//new secFrame().setVisible(true);
+				JOptionPane.showMessageDialog(frame,
+					    "you selected "+selectedObject);
 			}
 		});
 		btnViewSelectedContact.setBounds(295, 243, 161, 29);
 		frame.getContentPane().add(btnViewSelectedContact);
 		
+		JLabel lblSortBy = new JLabel("Sort By:");
+		lblSortBy.setBounds(6, 6, 61, 16);
+		frame.getContentPane().add(lblSortBy);
 		
+		JRadioButton rdbtnName = new JRadioButton("Name");
+		rdbtnName.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO get address book
+				ArrayList<Contact> c = null;//AB.getAB();
+				c.sort(COMPARE_BY_NAME);
+				showContacts(c);
+			}
+		});
+		rdbtnName.setFont(new Font("Lucida Grande", Font.PLAIN, 11));
+		rdbtnName.setBounds(59, 2, 141, 23);
+		frame.getContentPane().add(rdbtnName);
 		
+		JRadioButton rdbtnZipCode = new JRadioButton("Zip Code");
+		rdbtnZipCode.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO get address book
+				ArrayList<Contact> c = null;//AB.getAB();
+				c.sort(COMPARE_BY_ZIP);
+				showContacts(c);
+			}
+		});
+		rdbtnZipCode.setFont(new Font("Lucida Grande", Font.PLAIN, 11));
+		rdbtnZipCode.setBounds(59, 29, 141, 23);
+		frame.getContentPane().add(rdbtnZipCode);
 		
-
+		ButtonGroup group = new ButtonGroup();
+		group.add(rdbtnName);
+		group.add(rdbtnZipCode);
 	}
 	
+	public static Comparator<Contact> COMPARE_BY_NAME = new Comparator<Contact>() {
+        public int compare(Contact one, Contact other) {
+        	/*
+		Returns an integer less than zero, zero, or greater than zero, 
+		depending on the lexigraphical comparison of the two strings. First name is used to break ties.
+        	 */
+        	
+        	String oneName = one.getLastName();
+        	if (oneName.equals("")){
+        		oneName = one.getFirstName();
+        	}
+        	String otherName = other.getLastName();
+        	if (otherName.equals("")){
+        		otherName = other.getFirstName();
+        	}
+            int dif = one.getLastName().compareTo(other.getLastName());
+            if(dif == 0){
+            	dif = one.getFirstName().compareTo(other.getFirstName());
+            }
+            return dif;
+        }
+        };
+        
+        public static Comparator<Contact> COMPARE_BY_ZIP = new Comparator<Contact>() {
+            public int compare(Contact one, Contact other) {
+            	/*
+    		Returns an integer less than zero, zero, or greater than zero, depending on the lexigraphical comparison of the two strings. 
+            	 */
+                return one.getZip().compareTo(other.getZip());
+            }
+        };
+
+
+	
+	private void showContacts(ArrayList<Contact> contacts){
+				// make the table scrollable
+				
+				
+				// get all the contacts here
+				Object[][] data = new Object[contacts.size()][3];
+				int i = 0;
+				for (Contact c : contacts){
+					data[i][0] = c.getLastName();
+					if (c.getLastName().equals("")){
+						data[i][0] = c.getFirstName();
+					}
+					data[i][1] = c.getZip();
+					// TODO get the key
+					//data[i][2] = c.key;
+					i++;
+				}
+				
+				// to disable cell edit
+				DefaultTableModel tableModel = new DefaultTableModel(data, columnNames) {
+
+				    @Override
+				    public boolean isCellEditable(int row, int column) {
+				       //all cells false
+				       return false;
+				    }
+				};
+				
+				table.setModel(tableModel);
+	}
 	
 	// setup the menu bar
 	private void setupMenuBar() {
@@ -163,7 +252,9 @@ public class MainFrame {
 	    	public void actionPerformed(ActionEvent e) {
 	    		// open
 	    		JFileChooser chooser = new JFileChooser();
-	    		chooser.setCurrentDirectory(new java.io.File("."));
+	    		File workingDirectory = new File(System.getProperty("user.home"));
+
+	    		chooser.setCurrentDirectory(workingDirectory);
 	    		chooser.setDialogTitle("Open a file");
 	    		//chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 	    		//chooser.setAcceptAllFileFilterUsed(false);
@@ -172,8 +263,12 @@ public class MainFrame {
 	    		chooser.setFileFilter(tsvfilter);
 
 	    		if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-	    		  System.out.println("getCurrentDirectory(): " + chooser.getCurrentDirectory());
-	    		  System.out.println("getSelectedFile() : " + chooser.getSelectedFile());
+//	    		  System.out.println("getCurrentDirectory(): " + chooser.getCurrentDirectory());
+//	    		  System.out.println("getSelectedFile() : " + chooser.getSelectedFile());
+	    			
+	    			// TODO open an address book
+	    			//AB = new AddressBook(chooser.getSelectedFile().toString());
+	    			//showContacts(AB.getAB());
 	    		} else {
 	    		  System.out.println("No Selection ");
 	    		}
@@ -186,36 +281,59 @@ public class MainFrame {
 	    JMenuItem saveMenuItem = new JMenuItem("Save", null);
 	    saveMenuItem.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
-	    		// new file
+	    		// save
+	    		// TODO have to figure out if the file is opened
+	    		JFileChooser fileChooser = new JFileChooser();
+	    		fileChooser.setDialogTitle("Specify a file to save");   
+	    		 
+	    		int userSelection = fileChooser.showSaveDialog(frame);
+	    		 
+	    		if (userSelection == JFileChooser.APPROVE_OPTION) {
+	    		    File fileToSave = fileChooser.getSelectedFile();
+	    		    System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+	    		}
 	    	}
 	    });
 	    fileMenu.add(saveMenuItem);
 	    
-	    // File->Save As, N - Mnemonic
-	    JMenuItem saveasMenuItem = new JMenuItem("Save As", null);
-	    saveMenuItem.addActionListener(new ActionListener() {
-	    	public void actionPerformed(ActionEvent e) {
-	    		// new file
-	    	}
-	    });
-	    fileMenu.add(saveasMenuItem);
-	    
-	    // File->Close, N - Mnemonic
-	    JMenuItem closeMenuItem = new JMenuItem("Close", null);
-	    saveMenuItem.addActionListener(new ActionListener() {
-	    	public void actionPerformed(ActionEvent e) {
-	    		// new file
-	    	}
-	    });
-	    fileMenu.add(closeMenuItem);
-	    
-	    // File->Close, N - Mnemonic
-	    JMenuItem quitMenuItem = new JMenuItem("Quit", null);
-	    saveMenuItem.addActionListener(new ActionListener() {
-	    	public void actionPerformed(ActionEvent e) {
-	    		// new file
-	    	}
-	    });
-	    fileMenu.add(quitMenuItem);
+//	    // File->Save As, N - Mnemonic
+//	    JMenuItem saveasMenuItem = new JMenuItem("Save As", null);
+//	    saveMenuItem.addActionListener(new ActionListener() {
+//	    	public void actionPerformed(ActionEvent e) {
+//	    		// save as
+//	    		JFileChooser fileChooserSaveAs = new JFileChooser();
+//	    		fileChooserSaveAs.setDialogTitle("Specify a file to save");   
+//	    		 
+//	    		int userSelectio = fileChooserSaveAs.showSaveDialog(frame);
+//	    		 
+//	    		if (userSelectio == JFileChooser.APPROVE_OPTION) {
+//	    		    File fileToSave = fileChooserSaveAs.getSelectedFile();
+//	    		    System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+//	    		}
+//	    	}
+//	    });
+//	    fileMenu.add(saveasMenuItem);
+//	    
+//	    // File->Close, N - Mnemonic
+//	    JMenuItem closeMenuItem = new JMenuItem("Close", null);
+//	    saveMenuItem.addActionListener(new ActionListener() {
+//	    	public void actionPerformed(ActionEvent e) {
+//	    		frame.dispose();
+//	    	}
+//	    });
+//	    fileMenu.add(closeMenuItem);
+//	    
+//	    // File->Close, N - Mnemonic
+//	    JMenuItem quitMenuItem = new JMenuItem("Quit", null);
+//	    saveMenuItem.addActionListener(new ActionListener() {
+//	    	public void actionPerformed(ActionEvent e) {
+//	    		// new file
+//	    		System.exit(JFrame.EXIT_ON_CLOSE);
+//	    	}
+//	    });
+//	    fileMenu.add(quitMenuItem);
 	}
 }
+
+
+
