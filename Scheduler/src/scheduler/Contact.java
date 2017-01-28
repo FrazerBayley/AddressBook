@@ -13,31 +13,36 @@ public class Contact {
 	private String _lastName;
 	private String _phone;
 	private String _email;
-	private String _address;
+	private String _address1;
+	private String _address2;
 	private String _city;
 	private String _state;
 	private String _zip;
-
-	public Contact(String fn, String ln, String phone, String email, String add, String city, String state, String zip) {
+	
+	// aziz: added a _address1 and _address2 insted of _address
+	public Contact(String fn, String ln, String phone, String email, String add1, String add2, String city, String state, String zip) {
 		_firstName = fn;
 		_lastName = ln;
 		_phone = phone;
 		_email = email;
-		_address = add;
+		_address1 = add1;
+		_address2 = add2;
 		_city = city;
 		_state = state;
 		_zip = zip;
 	}
 	
+	// aziz: added a _address1 and _address2 insted of _address
 	public Contact(ArrayList<String> list){
 		_firstName = list.get(0);
 		_lastName = list.get(1);
 		_phone = list.get(2);
 		_email = list.get(3);
-		_address = list.get(4);
-		_city = list.get(5);
-		_state = list.get(6);
-		_zip = list.get(7);
+		_address1 = list.get(4);
+		_address2 = list.get(5);
+		_city = list.get(6);
+		_state = list.get(7);
+		_zip = list.get(8);
 	}
 
 	public static Comparator<Contact> COMPARE_BY_NAME = new Comparator<Contact>() {
@@ -90,12 +95,19 @@ public class Contact {
 	public void setEmail(String value) {
 		_email = value;
 	}
-	
-	public String getAddress() {
-		return _address;
+	// aziz: added a _address1 and _address2 insted of _address
+	public String getAddress1() {
+		return _address1;
 	}
-	public void setAddress(String value) {
-		_address = value;
+	public void setAddress1(String value) {
+		_address1 = value;
+	}
+	
+	public String getAddress2() {
+		return _address2;
+	}
+	public void setAddress2(String value) {
+		_address2 = value;
 	}
 	
 	public String getCity() {
