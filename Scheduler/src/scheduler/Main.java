@@ -2,7 +2,7 @@ package scheduler;
 
 public class Main {
 	public static void main(String[] args){ 
-		AddressEntryFrame addressFrame = new AddressEntryFrame();
+		EditContactFrame addressFrame = new EditContactFrame();
 		addressFrame.setVisible(true);
 	}
 }
