@@ -44,7 +44,7 @@ public class AddressBook {
 		AB.add(data);
 	}
 	
-	public void Delete(Integer index) {
+	public void Delete(int index) {
 		AB.remove(index);
 	}
 
@@ -68,40 +68,42 @@ public class AddressBook {
 		// might be able to rearrange search terms for
 		// the most probable terms being searched first
 		ArrayList<Contact> rv = new ArrayList<Contact>();
+		
 		for (Contact c : AB) {
-			if (c.getAddress1().contains(term)) {
+			if (org.apache.commons.lang3.StringUtils.containsIgnoreCase(c.getAddress1(), term)) {
 				rv.add(c);
-				break;
+				continue;
 			}
-			if (c.getAddress2().contains(term)) {
+			if (org.apache.commons.lang3.StringUtils.containsIgnoreCase(c.getAddress2(), term)) {
 				rv.add(c);
-				break;
+				continue;
 			}
-			if (c.getCity().contains(term)) {
+			if (org.apache.commons.lang3.StringUtils.containsIgnoreCase(c.getCity(), term)) {
 				rv.add(c);
-				break;
+				continue;
 			}
-			if (c.getState().contains(term)) {
+			if (org.apache.commons.lang3.StringUtils.containsIgnoreCase(c.getState(), term)) {
 				rv.add(c);
-				break;
+				continue;
 			}
-			if (c.getZip().contains(term)) {
+			if (org.apache.commons.lang3.StringUtils.containsIgnoreCase(c.getZip(), term)) {
 				rv.add(c);
-				break;
+				continue;
 			}
-			if (c.getEmail().contains(term)) {
+			if (org.apache.commons.lang3.StringUtils.containsIgnoreCase(c.getEmail(), term)) {
 				rv.add(c);
-				break;
+				continue;
 			}
-			if (c.getFirstName().contains(term)) {
+			if (org.apache.commons.lang3.StringUtils.containsIgnoreCase(c.getFirstName(), term)) {
 				rv.add(c);
-				break;
+				continue;
 			}
-			if (c.getLastName().contains(term)) {
+			if (org.apache.commons.lang3.StringUtils.containsIgnoreCase(c.getLastName(), term)){
+				//c.getLastName().contains(term)) {
 				rv.add(c);
-				break;
+				continue;
 			}
-			if (c.getPhone().contains(term)) {
+			if (org.apache.commons.lang3.StringUtils.containsIgnoreCase(c.getPhone(), term)) {
 				rv.add(c);
 			}
 		}

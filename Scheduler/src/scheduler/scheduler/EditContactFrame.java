@@ -18,21 +18,26 @@ public class EditContactFrame extends JFrame {
 	 * Constructor
 	 * Allows interaction between the program and the user.
 	 */
+	Contact temp[] = new Contact[2];
+	AddressBook addressBook;
+	Contact ne, tempContact;
 	boolean test;
-	ArrayList<Contact> addressBook;
-	int index;
+	AddressBook addressBook;
+	MainFrame mainFrame;
+	Contact ne;
 	private JButton _saveButton, _closeButton, _editButton, _deleteButton;
 	private JLabel _firstNameLbl, _lastNameLbl, _phoneLbl, _emailLbl, _address1Lbl, _address2Lbl, _cityLbl, _stateLbl, _zipLbl;
 	private JTextField _firstNameTxt, _lastNameTxt, _phoneTxt, _emailTxt, _address1Txt, _address2Txt, _cityTxt, _stateTxt, _zipTxt;
 	
-	public EditContactFrame(ArrayList<Contact> arrayList, int ind) {
+	public EditContactFrame(MainFrame _mainFrame, Contact contact) {
 		/*
 		 * Sets up GUI text fields, labels, and buttons.
 		 */
 		super("New Entry");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		addressBook = arrayList;
-		
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		mainFrame = _mainFrame;
+		addressBook = mainFrame.getAB();
+		ne = contact;
 		setLayout(new BorderLayout());
 
 		JPanel textPane = new JPanel(new GridLayout(9, 2));
@@ -99,7 +104,7 @@ public class EditContactFrame extends JFrame {
 		buttonPane.add(_saveButton);
 		_saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//saveEntry();
+				saveEntry();
 			}
 			
 		});
@@ -109,7 +114,7 @@ public class EditContactFrame extends JFrame {
 		_editButton.setEnabled(true);
 		_editButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//editEntry();
+				editEntry();
 			}
 		});
 		
@@ -118,48 +123,69 @@ public class EditContactFrame extends JFrame {
 		_deleteButton.setEnabled(true);
 		_deleteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//deleteEntry();
+				deleteEntry();
 			}
 		});
 		
+		tempContact = ne;
+		_firstNameTxt.setText(ne.getFirstName());
+		_lastNameTxt.setText(ne.getLastName());
+		_phoneTxt.setText(ne.getPhone());
+		_emailTxt.setText(ne.getEmail());
+		_address1Txt.setText(ne.getAddress1());
+		_address2Txt.setText(ne.getAddress2());
+		_cityTxt.setText(ne.getCity());
+		_stateTxt.setText(ne.getState());
+		_zipTxt.setText(ne.getZip());
+		
 		setEditable(false);
 		setSize(500,300);
+		
+		veiwContactInfo();
 	}
 	
 	public void closeWindow() {
 		/*
-		 * Method closeWindow() prompts the user whether or not they want to
-		 * add changes before closing. 
+		 * Method closeWindow() checks to see if changes have been made since the save button has been pressed. If not, the window is closed, if so, it
+		 * prompts the user whether or not they want to save changes before closing. 
 		 * yes - method calls addEntry()
 		 * no - method closes window. 
 		 */
-		if (test == true) {
-			int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to save changes before closing?");
-			if (dialogResult == JOptionPane.YES_OPTION) {
-				//saveEntry();
+		boolean flag;
+		Contact newContact = makeContactNow();
+		flag = compareContacts(newContact, tempContact);
+		tempContact = newContact;
+
+		if (flag) {
+			if (test) {
+				int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to save changes before closing?");
+				if (dialogResult == JOptionPane.YES_OPTION) {
+					saveEntry();
+				}
+				if (dialogResult == JOptionPane.NO_OPTION) {
+					System.exit(0);
+				}
 			}
-			if (dialogResult == JOptionPane.NO_OPTION) {
+			else {
 				System.exit(0);
 			}
-		}
-		else {
+		} else {
 			System.exit(0);
 		}
+
 	}
 	
 	public void saveEntry() {
 		/*
-		 * Method addEntry() takes user inputed data from GUI and saves it 
-		 * to an array list. 
+		 * Method saveEntry() takes user inputed data from GUI and users the setters to update the information in the Contact object. 
 		 */
-		Contact ne = addressBook.get(index);
 		if ((_firstNameTxt.getText() == "") && (_lastNameTxt.getText()== "")) {
 			JOptionPane.showMessageDialog(null, "Please enter a first or last name.");
 			return;
 		}
+		
 		ne.setFirstName(_firstNameTxt.getText());
 		ne.setLastName(_lastNameTxt.getText());
-		
 		if ((_phoneTxt.getText() == "") && (_emailTxt.getText() == "") && (_address1Txt.getText() == "") && (_address2Txt.getText() == "") && (_cityTxt.getText() == "") && (_stateTxt.getText() == "") && (_zipTxt.getText() == "")) {
 			JOptionPane.showMessageDialog(null, "Please enter at least one additional category");
 			return;
@@ -168,10 +194,22 @@ public class EditContactFrame extends JFrame {
 		ne.setEmail(_emailTxt.getText());
 		ne.setAddress1(_address1Txt.getText());
 		ne.setAddress2(_address2Txt.getText());
-		ne.setCity(_cityTxt.getText());
+		ne.setCity(_emailTxt.getText());
 		ne.setState(_stateTxt.getText());
 		ne.setZip(_zipTxt.getText());
 		
+		if ((_zipTxt.getText().length() > 5) || (!isNumber(_zipTxt.getText()))) {
+			
+			int dialogResult = JOptionPane.YES_NO_OPTION;
+			dialogResult = JOptionPane.showConfirmDialog(null, "Your zip code is not in a valid format, save anyway?", "Warning", dialogResult);
+			if (dialogResult == JOptionPane.YES_OPTION) {
+			}
+			if (dialogResult == JOptionPane.NO_OPTION) {
+				return;
+			}
+		}
+		
+		tempContact = makeContactNow();
 		JOptionPane.showMessageDialog(null, "Contact saved");
 	}
 	
@@ -182,21 +220,14 @@ public class EditContactFrame extends JFrame {
 		 * from Contact. 
 		 */		
 		setEditable(true);
-		Contact ne = addressBook.get(index);
-		_firstNameTxt.setText(ne.getFirstName());
-		_lastNameTxt.setText(ne.getLastName());
-		_phoneTxt.setText(ne.getPhone());
-		_emailTxt.setText(ne.getEmail());
-		_address1Txt.setText(ne.getAddress1());
-		_address2Txt.setText(ne.getAddress1());
-		_cityTxt.setText(ne.getCity());
-		_stateTxt.setText(ne.getState());
-		_zipTxt.setText(ne.getZip());
 	}
 	
 	public void deleteEntry() {
-		Contact ne = addressBook.get(index);
-		addressBook.remove(ne);
+		
+		
+		//addressBook.Delete(index);
+		addressBook.getBook().remove(ne);
+		mainFrame.refreshAB();
 	}
 	
 	public void setEditable(boolean b) {
@@ -213,5 +244,96 @@ public class EditContactFrame extends JFrame {
 		_cityTxt.setEditable(b);
 		_stateTxt.setEditable(b);
 		_zipTxt.setEditable(b);
+	}
+	
+	public void veiwContactInfo(){
+		_firstNameTxt.setText(ne.getFirstName());
+		_lastNameTxt.setText(ne.getLastName());
+		_phoneTxt.setText(ne.getPhone());
+		_emailTxt.setText(ne.getEmail());
+		_address1Txt.setText(ne.getAddress1());
+		_address2Txt.setText(ne.getAddress1());
+		_cityTxt.setText(ne.getCity());
+		_stateTxt.setText(ne.getState());
+		_zipTxt.setText(ne.getZip());
+	}
+	
+	public Contact makeContactNow() {
+		/*
+		 * Method makeContactNow() pulls whatever is currently in text boxes and stores it in a new Contact object.
+		 * Returns:
+		 * 		Contact object
+		 */
+		Contact cont;
+		String fn, ln, phone, email, address1, address2, city, state, zip;
+		fn = _firstNameTxt.getText();
+		ln = _lastNameTxt.getText();
+		phone = _phoneTxt.getText();
+		email = _emailTxt.getText();
+		address1 = _address1Txt.getText();
+		address2 = _address2Txt.getText();
+		city = _emailTxt.getText();
+		state = _stateTxt.getText();
+		zip = _zipTxt.getText();
+		
+		cont = new Contact(fn, ln, phone, email, address1, address2, city, state, zip);
+		return cont;
+	}
+	
+	public boolean compareContacts(Contact one, Contact two){
+		/*
+		 * Method compareContacts(Contact, Contact) compares contact from when save was pressed to contact
+		 * when close is pressed. 
+		 * Returns:
+		 * 		true  - changes between two contacts
+		 * 		false - no changes between two contacts 
+		 */
+	    boolean flag = false; //not different
+	    if (!one.getFirstName().equals(two.getFirstName())){
+	        flag = true; //different
+	        return flag;
+	    }
+	    if (!one.getLastName().equals(two.getLastName())){
+	        flag = true;
+	        return flag;
+	    }
+	    if (!one.getPhone().equals(two.getPhone())){
+	        flag = true;
+	        return flag;
+	    }
+	    if (!one.getEmail().equals(two.getEmail())){
+	        flag = true;
+	        return flag;
+	    }
+	    if (!one.getAddress1().equals(two.getAddress1())){
+	        flag = true;
+	        return flag;
+	    }
+	    if (!one.getAddress2().equals(two.getAddress2())){
+	        flag = true;
+	        return flag;
+	    }
+	    if (!one.getCity().equals(two.getCity())){
+	        flag = true;
+	        return flag;
+	    }
+	    if (!one.getState().equals(two.getState())){
+	        flag = true;
+	        return flag;
+	    }
+	    if (!one.getZip().equals(two.getZip())){
+	        flag = true;
+	        return flag;
+	    }
+	    return flag;
+	}
+	
+	public boolean isNumber(String str) {
+		try {
+			Integer.parseInt(str);
+		} catch (NumberFormatException nfe) {
+			return false;
+		}
+		return true;
 	}
 }
