@@ -3,7 +3,6 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -231,6 +230,7 @@ public class MainFrame {
 		// TODO Auto-generated method stub
 		
 		// to disable cell edit
+		@SuppressWarnings("serial")
 		DefaultTableModel tableModel = new DefaultTableModel(data, columnNames) {
 
 		    @Override

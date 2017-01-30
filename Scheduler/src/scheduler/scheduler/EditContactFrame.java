@@ -19,12 +19,10 @@ public class EditContactFrame extends JFrame {
 	 * Allows interaction between the program and the user.
 	 */
 	Contact temp[] = new Contact[2];
-	AddressBook addressBook;
 	Contact ne, tempContact;
 	boolean test;
 	AddressBook addressBook;
 	MainFrame mainFrame;
-	Contact ne;
 	private JButton _saveButton, _closeButton, _editButton, _deleteButton;
 	private JLabel _firstNameLbl, _lastNameLbl, _phoneLbl, _emailLbl, _address1Lbl, _address2Lbl, _cityLbl, _stateLbl, _zipLbl;
 	private JTextField _firstNameTxt, _lastNameTxt, _phoneTxt, _emailTxt, _address1Txt, _address2Txt, _cityTxt, _stateTxt, _zipTxt;
@@ -163,14 +161,14 @@ public class EditContactFrame extends JFrame {
 					saveEntry();
 				}
 				if (dialogResult == JOptionPane.NO_OPTION) {
-					System.exit(0);
+					this.dispose();
 				}
 			}
 			else {
-				System.exit(0);
+				this.dispose();
 			}
 		} else {
-			System.exit(0);
+			this.dispose();
 		}
 
 	}
@@ -208,9 +206,11 @@ public class EditContactFrame extends JFrame {
 				return;
 			}
 		}
+		mainFrame.refreshAB();
 		
 		tempContact = makeContactNow();
 		JOptionPane.showMessageDialog(null, "Contact saved");
+		
 	}
 	
 	

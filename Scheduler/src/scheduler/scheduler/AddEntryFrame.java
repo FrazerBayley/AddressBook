@@ -22,6 +22,7 @@ public class AddEntryFrame extends JFrame {
 	 */
 	AddressBook addressBook;
 	MainFrame mainFrame;
+	boolean entryAdded = false;
 	private JButton _saveButton, _closeButton, _editButton, _deleteButton;
 	private JLabel _firstNameLbl, _lastNameLbl, _phoneLbl, _emailLbl, _address1Lbl, _address2Lbl, _cityLbl, _stateLbl, _zipLbl;
 	private JTextField _firstNameTxt, _lastNameTxt, _phoneTxt, _emailTxt, _address1Txt, _address2Txt, _cityTxt, _stateTxt, _zipTxt;
@@ -125,16 +126,23 @@ public class AddEntryFrame extends JFrame {
 		 * yes - method calls addEntry()
 		 * no - method closes window. 
 		 */
-		int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to add contact before closing?");
-		if (dialogResult == JOptionPane.YES_OPTION) {
-			//addEntry();
+		if (!entryAdded && !entriesAreEmpty()){
+			int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to add contact before closing?");
+			if (dialogResult == JOptionPane.YES_OPTION) {
+				addEntry();
+			}
+			if (dialogResult == JOptionPane.NO_OPTION) {
+				//System.exit(0);
+				
+				this.dispose();
+				
+			}
 		}
-		if (dialogResult == JOptionPane.NO_OPTION) {
-			//System.exit(0);
-			
+		else{
 			this.dispose();
-			
 		}
+		
+		
 	}
 	
 	public void addEntry() {
@@ -168,7 +176,22 @@ public class AddEntryFrame extends JFrame {
 		mainFrame.refreshAB();
 		this.dispose();
 		JOptionPane.showMessageDialog(null, "Contact Saved");
+		entryAdded = true;
 		
-		
+	}
+	
+	boolean entriesAreEmpty(){
+		if (	_firstNameTxt.getText().equals("")
+				&& _lastNameTxt.getText().equals("")
+				&& _phoneTxt.getText().equals("")
+				&& _emailTxt.getText().equals("")
+				&& _address1Txt.getText().equals("")
+				&& _address2Txt.getText().equals("")
+				&& _cityTxt.getText().equals("")
+				&& _stateTxt.getText().equals("")
+				&& _zipTxt.getText().equals("")
+				)
+			return true;
+		return false;
 	}
 }

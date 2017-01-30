@@ -105,6 +105,7 @@ public class AddressBook {
 			}
 			if (org.apache.commons.lang3.StringUtils.containsIgnoreCase(c.getPhone(), term)) {
 				rv.add(c);
+
 			}
 		}
 		return rv;
