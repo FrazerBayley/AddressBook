@@ -117,6 +117,20 @@ public class Contact {
         }
     };
 	
+	@Override
+	public String toString(){
+		
+		return "firstName: "+ _firstName
+				+ "\nlastName: "+ _lastName
+				+ "\nphone: "+ _firstName
+				+ "\nemail: "+ _phone
+				+ "\naddress1: "+ _address1
+				+ "\naddress2: "+ _address2
+				+ "\ncity: "+ _city
+				+ "\nstate: "+ _state
+				+ "\nzip: "+ _zip;
+	}
+	
 	
 	public String getFirstName() {
 		return _firstName;
