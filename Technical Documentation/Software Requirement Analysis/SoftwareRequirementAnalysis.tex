@@ -82,14 +82,15 @@ Broadly, the address book is capable of:
 	\item Hold information such as first and last name, ZIP code, state, phone number, and email address.
 \end{itemize}
 \subsection{System Capabilities}
+For all conditions, the application would require that the user has a mouse, display, and keyboard.\\
 \fbox{\begin{minipage}{41em}
 		\large \textbf{1. Brief Description}\\
-		This use case describes how the user loads exports an address book.\\
+		This use case describes how the user exports an address book.\\
 		\large \textbf{2. Actors}\\
 		\tab \large  \textbf{2.1 User}\\
 		\tab \large  \textbf{2.2 Application}\\
 		\large \textbf{3. Preconditions}\\
-		The user has a mouse, keyboard, and the Address Book application open and visible on the display, with an address book loaded that the user wishes to export. There is enough memory on the computer to handle the size of a typical address book.\\
+		The Address Book application open and an address book is loaded.\\
 		\large \textbf{4. Basic Flow of Events}\\
 		1. The Address book displays the contacts in the address book.
 		\large \textbf{5. Alternative Flows}\\
@@ -107,7 +108,7 @@ Broadly, the address book is capable of:
 		\tab \large  \textbf{2.1 User}\\
 		\tab \large  \textbf{2.2 Application}\\
 		\large \textbf{3. Preconditions}\\
-		The user has a mouse, keyboard, and the Address Book application open and visible on the display, with the address book application just opened. There is enough memory on the computer to handle the size of a typical address book.\\
+		The Address Book application is just opened.\\
 		\large \textbf{4. Basic Flow of Events}\\
 		1. The Address Book displays the options to "Open an Address Book" and "Create an Address Book" \\
 		2. User selects to "Open an Address Book".\\
@@ -119,6 +120,8 @@ Broadly, the address book is capable of:
 		The user can change the directory to continue searching for an address book.\\
 		\large \textbf{5.2 User loads incorrect address book}\\
 		If in Step 5 the user realizes they loaded the incorrect address book, they can go back to Step 2.\\
+		\large \textbf{5.3 User picks a file that is not an address book}\\
+		In Step 3, the application will restrict any files that are not .tsv files.
 		\large \textbf{6. Post Condition}\\
 		An address book file is loaded, and the application displays the list of contacts.
 \end{minipage}}
@@ -129,7 +132,7 @@ Broadly, the address book is capable of:
 		\tab \large  \textbf{2.1 User}\\
 		\tab \large  \textbf{2.2 Application}\\
 		\large \textbf{3. Preconditions}\\
-		The user has a mouse, keyboard, and the Address Book application open and visible on the display, with the address book application opened and changes made by the user. There is enough memory on the computer to handle the size of a typical address book.\\
+		The Address Book application open and an address book is loaded.\\
 		\large \textbf{4. Basic Flow of Events}\\
 		1. The Address Book displays the options to "New", "Open", "Save", "Save as", "Close", and "Quit".\\
 		2. The user selects to "Save as".\\
@@ -138,7 +141,9 @@ Broadly, the address book is capable of:
 		5. Address book displays confirmation for saving address book.\\
 		\large \textbf{5. Alternative Flows}\\
 		\large \textbf{5.1 User does not wish to save as a new file}\\
-		\\If in step 3 the user does not wish to save anymore, the user can decide to select to exit.
+		If in step 3 the user does not wish to save anymore, the user can decide to select to exit.
+		\large \textbf{5.2 User attempts to overwrite a file}\\
+		
 		\large \textbf{6. Post Condition}\\
 		An address book is saved, and a file is left in the chosen file directory with all of the information that the user saved.
 \end{minipage}}
@@ -149,7 +154,7 @@ Broadly, the address book is capable of:
 		\tab \large  \textbf{2.1 User}\\
 		\tab \large  \textbf{2.2 Application}\\
 		\large \textbf{3. Preconditions}\\
-		The user has a mouse, keyboard, and the Address Book application open and visible on the display, with an address book loaded. There is enough memory on the computer to handle the size of a typical address book.\\
+		The Address Book application open and an address book is loaded.\\
 		\large \textbf{4. Basic Flow of Events}\\
 		1. The Address Book displays the contacts.\\
 		2. User selects "Search for User". \\
@@ -162,9 +167,8 @@ Broadly, the address book is capable of:
 		\large \textbf{5.2 Searched user does not exist}\\
 		If in step 5 the user does not find the searched for contact, they can continue back at Step 2 to try a different field. \\
 		\large \textbf{6. Post Condition}\\
-		The application displays the searched for user, giving options to edit and delete said user.
+		The application displays the searched for user, giving options to edit and delete said user. The application will return all Contacts with any part of searched String, and will search all different fields of the Contacts in the Address Book. 
 \end{minipage}}
-
 \fbox{\begin{minipage}{41em}
 		\large \textbf{1. Brief Description}\\
 		This use case describes how the user deletes an address in the address book. \\
@@ -172,7 +176,7 @@ Broadly, the address book is capable of:
 		\tab \large  \textbf{2.1 User}\\
 		\tab \large  \textbf{2.2 Application}\\
 		\large \textbf{3. Preconditions}\\
-		The user has a mouse, keyboard, and the Address Book application open and visible on the display, with an address book loaded. There is enough memory on the computer to handle the size of a typical address book.\\
+		The Address Book application open and an address book is loaded.\\
 		\large \textbf{4. Basic Flow of Events}\\
 		1. The Address Book displays the contacts.\\
 		2. User selects contact.\\
@@ -186,9 +190,8 @@ Broadly, the address book is capable of:
 		\large \textbf{5.2 User Does not want to confirm deletion}\\
 		If in step 5 the user does not wish to delete anymore, user selects to cancel and is brought back to step 1.\\
 		\large \textbf{6. Post Condition}\\
-		The deleted user's information is no longer in the address book file upon saving, but can be allowed to return upon the user's request.
+		The deleted user's information is no longer in the address book file upon saving, but can be allowed to return upon the user's request. The Address Book allows for duplicate entries, but only the chosen contact will be deleted and not it's duplicate.
 \end{minipage}}
-
 \fbox{\begin{minipage}{41em}
 		\large \textbf{1. Brief Description}\\
 		This use case describes how a user interacts with the Address Book to add and edit a new entry of another person. \\
@@ -196,7 +199,7 @@ Broadly, the address book is capable of:
 		\tab \large  \textbf{2.1 User}\\
 		\tab \large  \textbf{2.2 Application}\\
 		\large \textbf{3. Preconditions}\\
-		The user has a mouse, keyboard, and the Address Book application open and visible on the display. There is enough memory on the computer to handle the size of a typical address book.\\
+		The Address Book application open and an address book is loaded.\\
 		\large \textbf{4. Basic Flow of Events}\\
 		1. The use case begins when a user prepares to enter an address at the main screen of the Address Book\\
 		2. The Address Book presents several options representing different modes, such as "Create a new Contact," "Delete a Contact," "Import an Address Book," and "Export an Address Book."\\ 
@@ -212,9 +215,12 @@ Broadly, the address book is capable of:
 		\tab 2. If the first and last name are not filled out, stay at step 5 until completed.\\
 		\textbf{5.2 User entered an address that conflicts with another address} \\
 		If in step 6 the Address Book finds another address is already entered with the same information, then:\\
+		\large \textbf{5.3 User fills out non-standard format information in fields}\\
+		If in step 5 the User fills out an incorrectly formatted ZIP code or phone number, the application will prompt the user if the information is correct, and allow the user to save the contact anyways. This then resumes to Step 6.
 		\tab 1. The application displays "Current Address is already found in Address Book."\\
 		\tab 2. The use case resumes at step 2. \\
 		\large \textbf{6. Post Condition}\\
+		A contact is either added, or if already added, is updated with the newly supplied edited information.
 		
 \end{minipage}}
 
