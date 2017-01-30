@@ -45,27 +45,91 @@ public class Contact {
 		_phone = list.get(8);
 	}
 
-	public static Comparator<Contact> COMPARE_BY_NAME = new Comparator<Contact>() {
-		public int compare(Contact one, Contact other) {
-		/*
-		Returns an integer less than zero, zero, or greater than zero, depending on the lexigraphical comparison of the two strings. First name is used to break ties.
+    public static Comparator<Contact> COMPARE_BY_NAME = new Comparator<Contact>() {
+        public int compare(Contact one, Contact other) {
+        	/*
+        	Returns an integer less than zero, zero, or greater than zero, depending on the lexigraphical comparison of the two strings. First name is used to break ties.
+        	*/
+        	if ((isEmpty(one.getLastName()) && isEmpty(other.getLastName())) || (one.getLastName().equals(other.getLastName()))){
+        		if (isEmpty(one.getFirstName()) && isEmpty(other.getFirstName())){
+        			return 0; //both names are completely empty
+        		}
+        		if (isNotEmpty(one.getFirstName()) && isNotEmpty(other.getFirstName())){
+        			return one.getFirstName().compareTo(other.getFirstName());
+        		}
+        		if (isNotEmpty(one.getFirstName())){
+        			return -1; //one is greater
+        		}
+        		else {
+        			return 1; //other is greater
+        		}
+        	}
+        	if (isNotEmpty(one.getLastName()) && isNotEmpty(other.getLastName())){
+        		return one.getLastName().compareTo(other.getLastName());
+        	}
+        	if (isNotEmpty(one.getLastName())){
+        		return -1;
+        	}
+        	else {
+        		return 1;
+        	}
+        }
+    };
+    
+    private static boolean isEmpty(String str) {
+    	/*
+    	Input: String
+		Output: bool
 		*/
-		    int dif = one.getLastName().compareTo(other.getLastName());
-		    if(dif == 0){
-			dif = one.getFirstName().compareTo(other.getFirstName());
-		    }
-		    return dif;
-		}
-	};
+        return str == null || str.isEmpty(); // is empty
+    }
+    
+    private static boolean isNotEmpty(String str) {
+       	/*
+    	Input: String
+		Output: bool
+		*/
+        return !isEmpty(str); // is not empty
+    }
 
-	public static Comparator<Contact> COMPARE_BY_ZIP = new Comparator<Contact>() {
-		public int compare(Contact one, Contact other) {
-		/*
-		Returns an integer less than zero, zero, or greater than zero, depending on the lexigraphical comparison of the two strings. 
-		*/
-		    return one.getZip().compareTo(other.getZip());
-		}
-	};
+    public static Comparator<Contact> COMPARE_BY_ZIP = new Comparator<Contact>() {
+        public int compare(Contact one, Contact other) {
+        	/*
+        	Returns an integer less than zero, zero, or greater than zero, depending on the lexigraphical comparison of the two strings. 
+        	*/
+        	if (isEmpty(one.getZip())){
+        		if(isEmpty(other.getZip())){
+        			return 0;
+        		}
+        		else{
+        			return 1;
+        		}
+        	}
+        	if (isEmpty(other.getZip())){
+        		if (isEmpty(one.getZip())){
+        			return 0;
+        		}
+        		else {
+        			return -1;
+        		}
+        	}
+            return one.getZip().compareTo(other.getZip());
+        }
+    };
+	
+	@Override
+	public String toString(){
+		
+		return "firstName: "+ _firstName
+				+ "\nlastName: "+ _lastName
+				+ "\nphone: "+ _firstName
+				+ "\nemail: "+ _phone
+				+ "\naddress1: "+ _address1
+				+ "\naddress2: "+ _address2
+				+ "\ncity: "+ _city
+				+ "\nstate: "+ _state
+				+ "\nzip: "+ _zip;
+	}
 	
 	
 	public String getFirstName() {

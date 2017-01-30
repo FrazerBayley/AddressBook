@@ -19,20 +19,22 @@ public class EditContactFrame extends JFrame {
 	 * Allows interaction between the program and the user.
 	 */
 	boolean test;
-	ArrayList<Contact> addressBook;
-	int index;
+	AddressBook addressBook;
+	MainFrame mainFrame;
+	Contact ne;
 	private JButton _saveButton, _closeButton, _editButton, _deleteButton;
 	private JLabel _firstNameLbl, _lastNameLbl, _phoneLbl, _emailLbl, _address1Lbl, _address2Lbl, _cityLbl, _stateLbl, _zipLbl;
 	private JTextField _firstNameTxt, _lastNameTxt, _phoneTxt, _emailTxt, _address1Txt, _address2Txt, _cityTxt, _stateTxt, _zipTxt;
 	
-	public EditContactFrame(ArrayList<Contact> arrayList, int ind) {
+	public EditContactFrame(MainFrame _mainFrame, Contact contact) {
 		/*
 		 * Sets up GUI text fields, labels, and buttons.
 		 */
 		super("New Entry");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		addressBook = arrayList;
-		
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		mainFrame = _mainFrame;
+		addressBook = mainFrame.getAB();
+		ne = contact;
 		setLayout(new BorderLayout());
 
 		JPanel textPane = new JPanel(new GridLayout(9, 2));
@@ -99,7 +101,7 @@ public class EditContactFrame extends JFrame {
 		buttonPane.add(_saveButton);
 		_saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//saveEntry();
+				saveEntry();
 			}
 			
 		});
@@ -109,7 +111,7 @@ public class EditContactFrame extends JFrame {
 		_editButton.setEnabled(true);
 		_editButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//editEntry();
+				editEntry();
 			}
 		});
 		
@@ -118,12 +120,14 @@ public class EditContactFrame extends JFrame {
 		_deleteButton.setEnabled(true);
 		_deleteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//deleteEntry();
+				deleteEntry();
 			}
 		});
 		
 		setEditable(false);
 		setSize(500,300);
+		
+		veiwContactInfo();
 	}
 	
 	public void closeWindow() {
@@ -139,11 +143,13 @@ public class EditContactFrame extends JFrame {
 				//saveEntry();
 			}
 			if (dialogResult == JOptionPane.NO_OPTION) {
-				System.exit(0);
+				//System.exit(0);
+				this.dispose();
 			}
 		}
 		else {
-			System.exit(0);
+			//System.exit(0);
+			this.dispose();
 		}
 	}
 	
@@ -152,7 +158,6 @@ public class EditContactFrame extends JFrame {
 		 * Method addEntry() takes user inputed data from GUI and saves it 
 		 * to an array list. 
 		 */
-		Contact ne = addressBook.get(index);
 		if ((_firstNameTxt.getText() == "") && (_lastNameTxt.getText()== "")) {
 			JOptionPane.showMessageDialog(null, "Please enter a first or last name.");
 			return;
@@ -171,7 +176,7 @@ public class EditContactFrame extends JFrame {
 		ne.setCity(_cityTxt.getText());
 		ne.setState(_stateTxt.getText());
 		ne.setZip(_zipTxt.getText());
-		
+		mainFrame.refreshAB();
 		JOptionPane.showMessageDialog(null, "Contact saved");
 	}
 	
@@ -182,21 +187,24 @@ public class EditContactFrame extends JFrame {
 		 * from Contact. 
 		 */		
 		setEditable(true);
-		Contact ne = addressBook.get(index);
-		_firstNameTxt.setText(ne.getFirstName());
-		_lastNameTxt.setText(ne.getLastName());
-		_phoneTxt.setText(ne.getPhone());
-		_emailTxt.setText(ne.getEmail());
-		_address1Txt.setText(ne.getAddress1());
-		_address2Txt.setText(ne.getAddress1());
-		_cityTxt.setText(ne.getCity());
-		_stateTxt.setText(ne.getState());
-		_zipTxt.setText(ne.getZip());
+		
+//		_firstNameTxt.setText(ne.getFirstName());
+//		_lastNameTxt.setText(ne.getLastName());
+//		_phoneTxt.setText(ne.getPhone());
+//		_emailTxt.setText(ne.getEmail());
+//		_address1Txt.setText(ne.getAddress1());
+//		_address2Txt.setText(ne.getAddress1());
+//		_cityTxt.setText(ne.getCity());
+//		_stateTxt.setText(ne.getState());
+//		_zipTxt.setText(ne.getZip());
 	}
 	
 	public void deleteEntry() {
-		Contact ne = addressBook.get(index);
-		addressBook.remove(ne);
+		
+		
+		//addressBook.Delete(index);
+		addressBook.getBook().remove(ne);
+		mainFrame.refreshAB();
 	}
 	
 	public void setEditable(boolean b) {
@@ -214,4 +222,17 @@ public class EditContactFrame extends JFrame {
 		_stateTxt.setEditable(b);
 		_zipTxt.setEditable(b);
 	}
+	
+	public void veiwContactInfo(){
+		_firstNameTxt.setText(ne.getFirstName());
+		_lastNameTxt.setText(ne.getLastName());
+		_phoneTxt.setText(ne.getPhone());
+		_emailTxt.setText(ne.getEmail());
+		_address1Txt.setText(ne.getAddress1());
+		_address2Txt.setText(ne.getAddress1());
+		_cityTxt.setText(ne.getCity());
+		_stateTxt.setText(ne.getState());
+		_zipTxt.setText(ne.getZip());
+	}
+
 }
