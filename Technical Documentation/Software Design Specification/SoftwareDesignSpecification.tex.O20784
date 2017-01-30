@@ -141,13 +141,7 @@ The contact class is where all data regarding each entry in the address is kept.
 \textit{Precondition: A Contact Object}\\
 \textit{Postcondition: Inputted Contact is saved into the applied Address Book.}
 \lstinputlisting[language=Java]{./exampleCode/delete.java}
-\textit{Functions: Delete}\\
-\textit{Precondition: An Integer Index of the desired Contact to delete}\\
-\textit{Postcondition: The Contact at the specific instance will be deleted from the Address Book.}
 \lstinputlisting[language=Java]{./exampleCode/searchBy.java}
-\textit{Functions: Search}\\
-\textit{Precondition: An Address Book and an inputted String to search for.}\\
-\textit{Postcondition: An ArrayList of Contacts is returned, which will contain all Contacts with any set of the inputted String found in any of the Contacts fields. This will be displayed on the Main GUI window.}
 \subsubsection{Sorting}
 \lstinputlisting[language=Java]{./exampleCode/sortByName.java}
 \lstinputlisting[language=Java]{./exampleCode/sortByZip.java}
