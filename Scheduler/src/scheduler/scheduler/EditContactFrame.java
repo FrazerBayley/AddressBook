@@ -18,6 +18,9 @@ public class EditContactFrame extends JFrame {
 	 * Constructor
 	 * Allows interaction between the program and the user.
 	 */
+	Contact temp[] = new Contact[2];
+	AddressBook addressBook;
+	Contact ne, tempContact;
 	boolean test;
 	AddressBook addressBook;
 	MainFrame mainFrame;
