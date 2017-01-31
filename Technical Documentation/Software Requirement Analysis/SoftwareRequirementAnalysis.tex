@@ -33,8 +33,9 @@
 \begin{versionhistory}
 	\vhEntry{.1}{17.01.17}{Haley Whitman}{Created initial outline of document}
 	\vhEntry{.2}{18.01.17}{Haley Whitman}{Working through document, sections 1 to 2}
-	\vhEntry{.2}{22.01.17}{Haley Whitman}{Finished ConOps}
-	\vhEntry{.2}{23.01.17}{Haley Whitman}{Established the sections 3-8}
+	\vhEntry{.3}{22.01.17}{Haley Whitman}{Finished ConOps}
+	\vhEntry{.4}{23.01.17}{Haley Whitman}{Established the sections 3-8}
+	\vhEntry{1.0}{23.01.17}{Haley Whitman}{Updates to use-cases.}
 	
 \end{versionhistory}
 \pagebreak
@@ -92,14 +93,19 @@ For all conditions, the application would require that the user has a mouse, dis
 		\large \textbf{3. Preconditions}\\
 		The Address Book application open and an address book is loaded.\\
 		\large \textbf{4. Basic Flow of Events}\\
-		1. The Address book displays the contacts in the address book.
+		1. The Address book displays the contacts in the address book. \\
+		2. User selects option to export address book.
+		3. Address Book prompts for a file name to export to.
+		4. User inputs file name, and selects directory.
+		5. Address Book exports address book as a .tsv file.
+		6. Address Book displays current address book.
 		\large \textbf{5. Alternative Flows}\\
-		\large \textbf{5.1 User doesn't find the correct address book they wish to load}\\
-		The user can change the directory to continue searching for an address book.\\
-		\large \textbf{5.2 User loads incorrect address book}\\
-		If in Step 5 the user realizes they loaded the incorrect address book, they can go back to Step 2.\\
+		\large \textbf{5.1 User wishes to cancel exporting}\\
+		The user in step 4. can back out of the input prompt, and return to step 1.\\
+		\large \textbf{5.2 User attempts to overwrite another .tsv file}\\
+		If in Step 4. a .tsv file already exists with that name, the address prompts the user if it is okay to overwrite.\\
 		\large \textbf{6. Post Condition}\\
-		An address book file is created and the application displays a screen to view all of the contacts.
+		An address book file is exported as a .tsv file, and the address book will display the current address book.
 \end{minipage}}
 \fbox{\begin{minipage}{41em}
 		\large \textbf{1. Brief Description}\\ 
