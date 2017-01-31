@@ -196,7 +196,7 @@ public class EditContactFrame extends JFrame {
 		ne.setState(_stateTxt.getText());
 		ne.setZip(_zipTxt.getText());
 		
-		if ((_zipTxt.getText().length() > 5) || (!isNumber(_zipTxt.getText()))) {
+		if (((_zipTxt.getText().length() > 5) || (!isNumber(_zipTxt.getText()))) && !_zipTxt.getText().equals("")) {
 			
 			int dialogResult = JOptionPane.YES_NO_OPTION;
 			dialogResult = JOptionPane.showConfirmDialog(null, "Your zip code is not in a valid format, save anyway?", "Warning", dialogResult);
@@ -228,6 +228,7 @@ public class EditContactFrame extends JFrame {
 		//addressBook.Delete(index);
 		addressBook.getBook().remove(ne);
 		mainFrame.refreshAB();
+		this.dispose();
 	}
 	
 	public void setEditable(boolean b) {
@@ -252,7 +253,7 @@ public class EditContactFrame extends JFrame {
 		_phoneTxt.setText(ne.getPhone());
 		_emailTxt.setText(ne.getEmail());
 		_address1Txt.setText(ne.getAddress1());
-		_address2Txt.setText(ne.getAddress1());
+		_address2Txt.setText(ne.getAddress2());
 		_cityTxt.setText(ne.getCity());
 		_stateTxt.setText(ne.getState());
 		_zipTxt.setText(ne.getZip());

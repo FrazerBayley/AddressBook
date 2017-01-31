@@ -3,6 +3,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -18,6 +19,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JRadioButton;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JTextField;
@@ -30,6 +32,7 @@ public class MainFrame {
     private JMenuBar menuBar;
     private JScrollPane scrollPane;
     public File file;
+    static ArrayList<MainFrame> openedWindows = new ArrayList<MainFrame>();
     public String title;
     public static int txtBookNum = 1;
     private ArrayList<Contact> contactsList;
@@ -40,6 +43,10 @@ public class MainFrame {
 			                "Phone Number"};
 	private AddressBook addressBook;
 	private JTextField textField;
+	private boolean addressBookChanged;
+	int frameXpos = 200;
+	int frameYpos = 200;
+	
 
 
 	/**
@@ -48,19 +55,58 @@ public class MainFrame {
 	public MainFrame() {
 		initialize();
 	}
+	
+	public MainFrame(int x, int y) {
+		frameXpos = x;
+		frameYpos = y;
+		initialize();
+		
+	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		openedWindows.add(this);
 		menuBar = new JMenuBar();
 		setupMenuBar();
 	    frame.setJMenuBar(menuBar);
-		frame.setBounds(200, 200, 455, 350);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setBounds(frameXpos, frameYpos, 455, 350);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setResizable(false);
+		frame.addWindowListener(new java.awt.event.WindowAdapter() {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		    	if (addressBookChanged){
+		    		int option = JOptionPane.showConfirmDialog(frame, 
+		 		            "Do you want to save the changes made to the address book?", "Your changes will be lost if you don’t save them.", 
+		 		            JOptionPane.YES_NO_CANCEL_OPTION,
+		 		            JOptionPane.QUESTION_MESSAGE);
+		    		if (option == JOptionPane.YES_OPTION){
+		 		            save();
+		 		    }
+		    		else if (option == JOptionPane.NO_OPTION){
+	 		            
+		    		}
+		    		else{return;}
+		    	}
+		    	openedWindows.remove(0);
+		    	System.out.println(openedWindows.size());
+		    	if (openedWindows.size() == 0){
+		    		System.exit(JFrame.EXIT_ON_CLOSE);
+		    	}
+		    	else{
+		    		frame.dispose();
+		    	}
+		    	
+		       
+		    }
+		});
 		file =null;
+		contactsList = null;
+		addressBookChanged = false;
 		// set the title
 		title = "Address Book "+ txtBookNum;
 		frame.setTitle(title);
@@ -138,9 +184,9 @@ public class MainFrame {
 		btnFind.setBounds(216, 1, 117, 29);
 		frame.getContentPane().add(btnFind);
 		
-		JLabel lblNoteDoubleClick = new JLabel("note: double click to veiw a contact");
+		JLabel lblNoteDoubleClick = new JLabel("Double click to veiw a contact:");
 		lblNoteDoubleClick.setFont(new Font("Lucida Grande", Font.PLAIN, 9));
-		lblNoteDoubleClick.setBounds(6, 36, 186, 16);
+		lblNoteDoubleClick.setBounds(30, 46, 149, 16);
 		frame.getContentPane().add(lblNoteDoubleClick);
 	}
 	
@@ -282,13 +328,8 @@ public class MainFrame {
 	    saveMenuItem.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	    		// save
-	    		if (file == null){
-	    			saveAs();
-	    		}
-	    		else{
-	    			addressBook.Save(file.getAbsolutePath().toString());
-	    		}
-
+	    		save();
+	    		addressBookChanged = false;
 	    	}
 	    });
 	    fileMenu.add(saveMenuItem);
@@ -299,6 +340,7 @@ public class MainFrame {
 	    	public void actionPerformed(ActionEvent e) {
 	    		// save as
 	    		saveAs();
+	    		addressBookChanged = false;
 	    	}
 	    });
 	    fileMenu.add(saveasMenuItem);
@@ -307,7 +349,28 @@ public class MainFrame {
 	    JMenuItem closeMenuItem = new JMenuItem("Close", null);
 	    closeMenuItem.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
+	    		if (addressBookChanged){
+		    		int option = JOptionPane.showConfirmDialog(frame, 
+		 		            "Do you want to save the changes made to the address book?", "Your changes will be lost if you don’t save them.", 
+		 		            JOptionPane.YES_NO_CANCEL_OPTION,
+		 		            JOptionPane.QUESTION_MESSAGE);
+		    		if (option == JOptionPane.YES_OPTION){
+		    			save();
+		 		    }
+		    		else if (option == JOptionPane.NO_OPTION){
+		    		}
+		    		else{
+		    			return;
+		    		}
+		    	}
+	    		Point p = frame.getLocation();
+	    		//Point y = frame.getLocationOnScreen();
+	    		openedWindows.remove(0);
 	    		frame.dispose();
+	    		txtBookNum++;
+	    		new MainFrame(p.x, p.y).frame.setVisible(true);
+	    		
+    			
 	    	}
 	    });
 	    fileMenu.add(closeMenuItem);
@@ -316,7 +379,25 @@ public class MainFrame {
 	    JMenuItem quitMenuItem = new JMenuItem("Quit", null);
 	    quitMenuItem.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
-	    		// new file
+	    		if (addressBookChanged){
+		    		int option = JOptionPane.showConfirmDialog(frame, 
+		 		            "Do you want to save the changes made to the address book?", "Your changes will be lost if you don’t save them.", 
+		 		            JOptionPane.YES_NO_CANCEL_OPTION,
+		 		            JOptionPane.QUESTION_MESSAGE);
+		    		if (option == JOptionPane.YES_OPTION){
+		    			save();
+		 		    }
+		    		else if (option == JOptionPane.NO_OPTION){
+		    			
+		    		}
+		    		else{return;}
+		    		
+		    	}
+	    		//Point y = frame.getLocationOnScreen();
+	    		openedWindows.remove(0);
+	    		for (MainFrame f : openedWindows){
+	    			f.checkToSave();
+	    		}
 	    		System.exit(JFrame.EXIT_ON_CLOSE);
 	    	}
 	    });
@@ -324,6 +405,34 @@ public class MainFrame {
 	    
 	}
 	
+	protected void checkToSave() {
+		// TODO Auto-generated method stub
+		if (addressBookChanged){
+    		int option = JOptionPane.showConfirmDialog(frame, 
+ 		            "Do you want to save the changes made to the address book?", "Your changes will be lost if you don’t save them.", 
+ 		            JOptionPane.YES_NO_CANCEL_OPTION,
+ 		            JOptionPane.QUESTION_MESSAGE);
+    		if (option == JOptionPane.YES_OPTION){
+    			save();
+ 		    }
+    		else if (option == JOptionPane.NO_OPTION){
+    			
+    		}
+    		else{return;}
+		}
+		
+	}
+
+	protected void save() {
+		// TODO Auto-generated method stub
+		if (file == null){
+			saveAs();
+		}
+		else{
+			addressBook.Save(file.getAbsolutePath().toString());
+		}
+	}
+
 	private void saveAs() {
 		// TODO Auto-generated method stub
 		// source: http://stackoverflow.com/questions/17010647/set-default-saving-extention-with-jfilechooser
@@ -370,6 +479,7 @@ public class MainFrame {
 	
 	public void refreshAB() {
 		// Search the contactsList again
+		addressBookChanged  = true;
 		search();
 	}
 	
