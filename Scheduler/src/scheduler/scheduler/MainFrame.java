@@ -36,8 +36,8 @@ public class MainFrame {
     // column title
 	private String[] columnNames = {
 			                "Last Name",
-			                "Zip Code",
-			                "index"};
+			                "First Name",
+			                "Phone Number"};
 	private AddressBook addressBook;
 	private JTextField textField;
 
@@ -158,11 +158,10 @@ public class MainFrame {
 	}
 
 	private void setupTable() {
-		// TODO Auto-generated method stub
+		// make the table scrollable
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(30, 64, 385, 167);
 		frame.getContentPane().add(scrollPane);
-		//String s[][] = {{"No Entry","",""}};
 		table = new JTable(null, columnNames);
 		populateTable(null);
 		table.addMouseListener(new MouseAdapter() {
@@ -187,13 +186,6 @@ public class MainFrame {
 	protected void veiwItem() {
 		// TODO Auto-generated method stub
 		int selectedRowIndex = table.getSelectedRow();
-		//int selectedColumnIndex = table.getSelectedColumn();
-		String selectedObject = (String) table.getModel().getValueAt(selectedRowIndex, 0);
-			//index = selectedObject;
-			//new secFrame().setVisible(true);
-//		JOptionPane.showMessageDialog(frame,
-//			    "you selected "+selectedObject);
-//		System.out.println(AB.getBook().get(selectedRowIndex).toString());
 		new EditContactFrame(this, contactsList.get(selectedRowIndex)).setVisible(true);
 	}
 
@@ -205,20 +197,14 @@ public class MainFrame {
 
 	
 	public void showContacts(){
-				// make the table scrollable
-				
-				
 				// get all the contacts here
 				
 				Object[][] data = new Object[contactsList.size()][3];
 				int key = 0;
 				for (Contact c : contactsList){
 					data[key][0] = c.getLastName();
-					if (c.getLastName().equals("")){
-						data[key][0] = c.getFirstName();
-					}
-					data[key][1] = c.getZip();
-					//data[key][2] = key;
+					data[key][1] = c.getFirstName();
+					data[key][2] = c.getPhone();
 					key++;
 				}
 				populateTable(data);
