@@ -196,7 +196,7 @@ public class EditContactFrame extends JFrame {
 		ne.setState(_stateTxt.getText());
 		ne.setZip(_zipTxt.getText());
 		
-		if (((_zipTxt.getText().length() > 5) || (!isNumber(_zipTxt.getText()))) && !_zipTxt.getText().equals("")) {
+		if (((_zipTxt.getText().length() != 5) || (!isNumber(_zipTxt.getText()))) && !_zipTxt.getText().equals("")) {
 			
 			int dialogResult = JOptionPane.YES_NO_OPTION;
 			dialogResult = JOptionPane.showConfirmDialog(null, "Your zip code is not in a valid format, save anyway?", "Warning", dialogResult);
@@ -223,13 +223,19 @@ public class EditContactFrame extends JFrame {
 	}
 	
 	public void deleteEntry() {
-		
-		
-		//addressBook.Delete(index);
-		addressBook.getBook().remove(ne);
-		mainFrame.refreshAB();
-		this.dispose();
+		/*
+		 * Method deleteEntry() deletes the entry from the address book.
+		 */
+		int dialogResult = JOptionPane.YES_NO_OPTION;
+		dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this entry?", "Warning", dialogResult);
+		if (dialogResult == JOptionPane.YES_OPTION) {
+			addressBook.getBook().remove(ne);
+			mainFrame.refreshAB();
+			this.dispose();
+		}
+	
 	}
+
 	
 	public void setEditable(boolean b) {
 		/*
