@@ -170,6 +170,17 @@ public class AddEntryFrame extends JFrame {
 			return;
 		}
 		
+		if ((_zipTxt.getText().length() != 5) || (!isNumber(_zipTxt.getText()))) {
+			
+			int dialogResult = JOptionPane.YES_NO_OPTION;
+			dialogResult = JOptionPane.showConfirmDialog(null, "Your zip code is not in a valid format, save anyway?", "Warning", dialogResult);
+			if (dialogResult == JOptionPane.YES_OPTION) {
+			}
+			if (dialogResult == JOptionPane.NO_OPTION) {
+				return;
+			}
+		}
+		
 		Contact ne = new Contact(fn, ln, phone, email, address1, address2, city, state, zip);
 		addressBook.Add(ne);
 		//mainFrame.setAB(addressBook);
@@ -193,5 +204,14 @@ public class AddEntryFrame extends JFrame {
 				)
 			return true;
 		return false;
+	}
+	
+	public boolean isNumber(String str) {
+		try {
+			Integer.parseInt(str);
+		} catch (NumberFormatException nfe) {
+			return false;
+		}
+		return true;
 	}
 }
