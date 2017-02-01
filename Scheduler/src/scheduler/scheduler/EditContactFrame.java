@@ -196,7 +196,7 @@ public class EditContactFrame extends JFrame {
 		ne.setState(_stateTxt.getText());
 		ne.setZip(_zipTxt.getText());
 		
-		if (((_zipTxt.getText().length() != 5) || (!isNumber(_zipTxt.getText()))) && !_zipTxt.getText().equals("")) {
+		if (!_zipTxt.getText().equals("") && ((_zipTxt.getText().length() != 5) || (!isNumber(_zipTxt.getText())))) {
 			
 			int dialogResult = JOptionPane.YES_NO_OPTION;
 			dialogResult = JOptionPane.showConfirmDialog(null, "Your zip code is not in a valid format, save anyway?", "Warning", dialogResult);
