@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path=""/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/Users/abdulazizalheidous/git/CIS-422-Scheduler/org.apache.commons.io.jar"/>
-	<classpathentry kind="lib" path="/Users/abdulazizalheidous/git/CIS-422-Scheduler/commons-lang3-3.5.jar"/>
+	<classpathentry kind="lib" path="/Users/mez/git/CIS-422-Scheduler/org.apache.commons.io.jar"/>
+	<classpathentry kind="lib" path="/Users/mez/git/CIS-422-Scheduler/commons-lang3-3.5.jar"/>
 	<classpathentry kind="output" path=""/>
 </classpath>
