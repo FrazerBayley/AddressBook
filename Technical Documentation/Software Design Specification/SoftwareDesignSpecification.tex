@@ -6,9 +6,11 @@
 \usepackage{listings}
 \usepackage{color}
 \usepackage{enumitem}
+\usepackage{pdfpages}
 
 \newlength{\drop}
 \newcommand\tab[1][1cm]{\hspace*{#1}}
+\setboolean{@twoside}{false}
 
 \definecolor{javared}{rgb}{0.6,0,0} % for strings
 \definecolor{javagreen}{rgb}{0.25,0.5,0.35} % comments
@@ -32,7 +34,7 @@
 
 
 \begin{document}
-	
+
 	\begin{titlepage}
 		\drop=0.1\textheight
 		\centering
@@ -53,7 +55,7 @@
 
 
 \tableofcontents
-\vspace*{10\baselineskip}
+\vspace*{6\baselineskip}
 \begin{versionhistory}
 	\vhEntry{.1}{23.01.17}{Haley Whitman}{Created initial outline of document}
 	\vhEntry{.2}{25.01.17}{Haley Whitman}{Added all code snippets}
@@ -61,12 +63,12 @@
 	
 \end{versionhistory}
 \pagebreak
-
+\includepdf[pages=-, offset=0 -50]{DesignDiagram.pdf}
 \section{Introduction}
 \subsection{Intended Audience}
 The following document covers all functionality of the front and back end code and how they relate with the user's experience. This document is intended for programmers, team managers, and quality assurance on the developing team to ensure that the code is running to this specification.
 \subsection{How to Use this Document}
-This document is intended to help organize all modules, classes, and functions found in the Address Book code. It is meant to help all team members design their components to this specification, as well as having a straightforward method of analyzing 
+This document is intended to help organize all modules, classes, and functions found in the Address Book code. It is meant to help all team members design their components to this specification, as well as having a straightforward method of analyzing interactions between different components. Reasonings for why design choices have been made are found at the end of the document.
 \section{Summary}
 The entirety of the program is based off of Java JDK 8, which is using a TSV file format to both load and export address book files. This document itself was created from the list of customer specifications which, with customer meetings, guided the creation of the Software Requirements Analysis, which was used to create the requirements needed to begin programming. This document will help create an Quality Assurance documents needed to test the quality of the resulting application. \\
 This document will contain all programming interactions between modules, classes, and functions. This will be achieved by both diagrams and showing all function headers and descriptions of what they achieve and their interactions.
@@ -154,9 +156,17 @@ The contact class is where all data regarding each entry in the address is kept.
 \lstinputlisting[language=Java]{./exampleCode/compareName.java}
 \lstinputlisting[language=Java]{./exampleCode/compareZip.java}
 
+\section{Module/Class Explanations}
 
+\subsection{Driver}
+\subsection{MainFrame}
+\subsection{AddEntryFrame}
+\subsection{EditContactFrame}
 
-
+\subsection{AddressBook}
+\subsection{Contact}
+\subsection{TSV\_Reader}
+\subsection{TSV\_Writer}
 
 \section{Appendices}
 
