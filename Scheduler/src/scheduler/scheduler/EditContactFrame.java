@@ -20,7 +20,6 @@ public class EditContactFrame extends JFrame {
 	 */
 	Contact temp[] = new Contact[2];
 	Contact ne, tempContact;
-	boolean test;
 	AddressBook addressBook;
 	MainFrame mainFrame;
 	private JButton _saveButton, _closeButton, _editButton, _deleteButton;
@@ -259,7 +258,6 @@ public class EditContactFrame extends JFrame {
 		/*
 		 * Method that makes text fields editable.
 		 */
-		test = b;
 		_firstNameTxt.setEditable(b);
 		_lastNameTxt.setEditable(b);
 		_phoneTxt.setEditable(b);
