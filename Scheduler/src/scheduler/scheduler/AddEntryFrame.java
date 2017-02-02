@@ -22,6 +22,7 @@ public class AddEntryFrame extends JFrame {
 	 */
 	AddressBook addressBook;
 	MainFrame mainFrame;
+	Contact tempContact;
 	boolean entryAdded = false;
 	private JButton _saveButton, _closeButton, _editButton, _deleteButton;
 	private JLabel _firstNameLbl, _lastNameLbl, _phoneLbl, _emailLbl, _address1Lbl, _address2Lbl, _cityLbl, _stateLbl, _zipLbl;
@@ -34,7 +35,28 @@ public class AddEntryFrame extends JFrame {
 		super("New Entry");
 		mainFrame = _mainFrame;
 		addressBook = mainFrame.getAB();
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		this.addWindowListener(new java.awt.event.WindowAdapter() {
+
+			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+				boolean flag;
+				Contact newContact = makeContactNow();
+				flag = compareContacts(newContact, tempContact);
+				newContact = tempContact;
+				if (flag) {
+					int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to save contact before closing?");
+					if (dialogResult == JOptionPane.YES_OPTION) {
+						addEntry();
+					}
+					if (dialogResult == JOptionPane.NO_OPTION) {
+						dispose();
+					}
+				} else {
+					dispose();
+				}
+			}
+			
+		});
 		
 		setLayout(new BorderLayout());
 
@@ -116,6 +138,7 @@ public class AddEntryFrame extends JFrame {
 		buttonPane.add(_deleteButton);
 		_deleteButton.setEnabled(false);
 		
+		tempContact = makeContactNow();
 		setSize(500,300);
 	}
 	
@@ -126,22 +149,23 @@ public class AddEntryFrame extends JFrame {
 		 * yes - method calls addEntry()
 		 * no - method closes window. 
 		 */
-		if (!entryAdded && !entriesAreEmpty()){
-			int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to add contact before closing?");
+		boolean flag;
+		Contact newContact = makeContactNow();
+		flag = compareContacts(newContact, tempContact);
+		tempContact = newContact;
+		
+		if (flag) {
+			int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to save contact before closing?");
 			if (dialogResult == JOptionPane.YES_OPTION) {
 				addEntry();
 			}
 			if (dialogResult == JOptionPane.NO_OPTION) {
-				//System.exit(0);
-				
 				this.dispose();
-				
 			}
 		}
 		else{
 			this.dispose();
-		}
-		
+			}
 		
 	}
 	
@@ -169,7 +193,7 @@ public class AddEntryFrame extends JFrame {
 			JOptionPane.showMessageDialog(null, "Please enter at least one additional category");
 			return;
 		}
-		
+		 
 		if (!_zipTxt.getText().equals("") && ((_zipTxt.getText().length() != 5) || (!isNumber(_zipTxt.getText())))) {
 		
 			int dialogResult = JOptionPane.YES_NO_OPTION;
@@ -182,10 +206,10 @@ public class AddEntryFrame extends JFrame {
 		}
 		
 		Contact ne = new Contact(fn, ln, phone, email, address1, address2, city, state, zip);
+		tempContact = makeContactNow();
 		addressBook.Add(ne);
-		//mainFrame.setAB(addressBook);
 		mainFrame.refreshAB();
-		this.dispose();
+		//this.dispose();
 		JOptionPane.showMessageDialog(null, "Contact Saved");
 		entryAdded = true;
 		
@@ -204,6 +228,77 @@ public class AddEntryFrame extends JFrame {
 				)
 			return true;
 		return false;
+	}
+	
+	
+	public Contact makeContactNow() {
+		/*
+		 * Method makeContactNow() pulls whatever is currently in text boxes and stores it in a new Contact object.
+		 * Returns:
+		 * 		Contact object
+		 */
+		Contact cont;
+		String fn, ln, phone, email, address1, address2, city, state, zip;
+		fn = _firstNameTxt.getText();
+		ln = _lastNameTxt.getText();
+		phone = _phoneTxt.getText();
+		email = _emailTxt.getText();
+		address1 = _address1Txt.getText();
+		address2 = _address2Txt.getText();
+		city = _emailTxt.getText();
+		state = _stateTxt.getText();
+		zip = _zipTxt.getText();
+		
+		cont = new Contact(fn, ln, phone, email, address1, address2, city, state, zip);
+		return cont;
+	}
+	
+	public boolean compareContacts(Contact one, Contact two){
+		/*
+		 * Method compareContacts(Contact, Contact) compares contact from when save was pressed to contact
+		 * when close is pressed. 
+		 * Returns:
+		 * 		true  - changes between two contacts
+		 * 		false - no changes between two contacts 
+		 */
+	    boolean flag = false; //not different
+	    if (!one.getFirstName().equals(two.getFirstName())){
+	        flag = true; //different
+	        return flag;
+	    }
+	    if (!one.getLastName().equals(two.getLastName())){
+	        flag = true;
+	        return flag;
+	    }
+	    if (!one.getPhone().equals(two.getPhone())){
+	        flag = true;
+	        return flag;
+	    }
+	    if (!one.getEmail().equals(two.getEmail())){
+	        flag = true;
+	        return flag;
+	    }
+	    if (!one.getAddress1().equals(two.getAddress1())){
+	        flag = true;
+	        return flag;
+	    }
+	    if (!one.getAddress2().equals(two.getAddress2())){
+	        flag = true;
+	        return flag;
+	    }
+	    if (!one.getCity().equals(two.getCity())){
+	        flag = true;
+	        return flag;
+	    }
+	    if (!one.getState().equals(two.getState())){
+	        flag = true;
+	        return flag;
+	    }
+	    if (!one.getZip().equals(two.getZip())){
+	        flag = true;
+	        return flag;
+	    }
+	    return flag;
 	}
 	
 	public boolean isNumber(String str) {
