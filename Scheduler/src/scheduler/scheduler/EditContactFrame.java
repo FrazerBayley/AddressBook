@@ -35,6 +35,29 @@ public class EditContactFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		mainFrame = _mainFrame;
 		addressBook = mainFrame.getAB();
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		this.addWindowListener(new java.awt.event.WindowAdapter() {
+
+			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+				boolean flag;
+				Contact newContact = makeContactNow();
+				flag = compareContacts(newContact, tempContact);
+				newContact = tempContact;
+				if (flag) {
+					int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to save contact before closing?");
+					if (dialogResult == JOptionPane.YES_OPTION) {
+						saveEntry();
+					}
+					if (dialogResult == JOptionPane.NO_OPTION) {
+						dispose();
+					}
+				} else {
+					dispose();
+				}
+			}
+			
+		});
+		
 		ne = contact;
 		setLayout(new BorderLayout());
 
@@ -155,22 +178,17 @@ public class EditContactFrame extends JFrame {
 		tempContact = newContact;
 
 		if (flag) {
-			if (test) {
-				int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to save changes before closing?");
-				if (dialogResult == JOptionPane.YES_OPTION) {
-					saveEntry();
-				}
-				if (dialogResult == JOptionPane.NO_OPTION) {
-					this.dispose();
-				}
+			int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to save changes before closing?");
+			if (dialogResult == JOptionPane.YES_OPTION) {
+				saveEntry();
 			}
-			else {
+			if (dialogResult == JOptionPane.NO_OPTION) {
 				this.dispose();
 			}
-		} else {
+		}
+		else {
 			this.dispose();
 		}
-
 	}
 	
 	public void saveEntry() {
