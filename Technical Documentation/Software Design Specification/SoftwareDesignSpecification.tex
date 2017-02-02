@@ -59,6 +59,7 @@
 \begin{versionhistory}
 	\vhEntry{.1}{23.01.17}{Haley Whitman}{Created initial outline of document}
 	\vhEntry{.2}{25.01.17}{Haley Whitman}{Added all code snippets}
+	\vhEntry{1.0}{31.01.17}{Haley Whitman}{Added diagram and explanations}
 
 	
 \end{versionhistory}
@@ -159,14 +160,21 @@ The contact class is where all data regarding each entry in the address is kept.
 \section{Module/Class Explanations}
 
 \subsection{Driver}
+This main class was created to initiate the main GUI window, and is intended to serve in the future as the "Main" of the program. 
 \subsection{MainFrame}
+This class is considered the main link between the back-end and the front-end of this application. It is used to initiate and display any Address Book that the user loads, and allows for the user to open up ancillary edit and add windows for managing contacts.
 \subsection{AddEntryFrame}
+This class is used for creating contacts. AddEntryFrame shares many similarities to EditContactFrame, but focuses only on making the constructor for the Contact class. The reason why both the Add and Edit GUI frames are separate is to make the code more manageable in the future, such that in later developments there can be more changes to both activities. Having separate frames also will allow multiple address books to be opened at once, as global variables should be avoided for this reason.
 \subsection{EditContactFrame}
-
+This class is used for editing contacts. EditContactFrame shares many similarities to AddEntryFrame, but uses the back-end Contact Setters and getters to edit the current Contact's information. One negative that comes from this type of design is that some changes to the AddEntryFrame would have to be replicated here, such as prompting to save on exiting with unsaved information. With multiple windows, this code replication is not ideal. However, the benefit of not dealing with global variables outweighs this.
 \subsection{AddressBook}
+This class is used to store all the Contacts created for the application. Since the Address Book needs to deal with both loading and exporting TSV files, a simple ArrayList was chosen to store all of this information. This class depends on TSV\_Writer and TSV\_Reader to do file handling. Since the requirements of the AddressBook are only needed to store approximately hundreds of contacts, no optimizations were needed to be done to manage the number of Contacts within searching and sorting. This lets the complexity of the code be much lower, and is easier to manage.
 \subsection{Contact}
+This class is used to store all the needed fields of information for Contacts, and includes a set of Getters and Setters for each. If any new fields are needed for Contacts, they can simply be added to this Class as well as the corresponding Getters and Setters.
 \subsection{TSV\_Reader}
+For this project, it is not required to only need to import TSV files, but for this implementation, both our imported and exported files are the same. This implementation is helpful because it allows us to keep the complexity of the code low, as well as keep the same standard file structure present throughout the application.
 \subsection{TSV\_Writer}
+This Class takes care of the Export feature of the Address Book, which is standardized as per the requirements of the customer. This will read through a provided AddressBook Class and output a standardized format TSV file. 
 
 \section{Appendices}
 
