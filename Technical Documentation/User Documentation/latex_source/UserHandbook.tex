@@ -5,6 +5,8 @@
 \usepackage{vhistory}
 \usepackage{enumitem}
 \usepackage{graphicx}
+\usepackage{hyperref}
+
 
 \newlength{\drop}
 
@@ -45,7 +47,7 @@
 
 \section{Introduction}
 \subsection{A Simple Address Book}
-Thank you for using this simple Address Book. This Address Book is designed for an average person who may have tens to hundreds of contacts. It provides functionality that you would expect to have in a simple Address Book, such as adding contacts, editing or deleting a contact, etc. 
+Thank you for using this simple Address Book. This Address Book is designed for an average person who may have hundreds of contacts. It provides functionality that you would expect to have in a simple Address Book, such as adding contacts, editing or deleting a contact, and importing and exporting several different address files.
 \subsection{How to Use this Handbook}
 This handbook covers a range of scenarios you might encounter when using this Address Book. This handbook will walk you through each scenario step by step.
 \begin{itemize}
@@ -58,7 +60,7 @@ This handbook covers a range of scenarios you might encounter when using this Ad
 
 \section{Getting Started with the Address Book}
 \subsection{Download and Install}
-The development team will have sent you the addressBook.jar file that launches the application. In case you did not receive or lost the addressBook.jar file please go to \(https://github.com/WhitmanH/CIS-422-Scheduler\) to download the addressBook.jar file. 
+The development team will have sent you the addressBook.jar file that launches the application. In case you did not receive or lost the addressBook.jar file please go to \href{https://github.com/WhitmanH/CIS-422-Scheduler}{Address Book} (\(\leftarrow\) This is a click-able link) to download the addressBook.jar file. 
 \subsection{Starting the Application}
 To launch the application select and open the addressBook.jar file. This will immediately launch the Address Book application. If for some reason the application does not open go to your command line interface and cd into the directory in which the application file sits. Then type the command: "java -jar addressBook.jar", the Address Book will then open in another window. If you have further problems, please contact Team Robosharks. Enjoy!
 
@@ -69,7 +71,7 @@ To launch the application select and open the addressBook.jar file. This will im
 Adding a new contact is easy to do in this Address Book. It will only take a few clicks.
 \subsection{Procedure}
 \begin{enumerate}[label=\textbf{\arabic*})]
-    \item{\textbf{Begin at the Main Page}}\\ Begin at the main page of the Address Book. Below are two images of the main page to help you verify you are where you need to be.
+    \item{\textbf{Begin at the Main Page}}\\ Below are two images of the main page to help you verify you are where you need to be.
     
     \begin{figure}[h!]
     \centering
@@ -85,7 +87,7 @@ Adding a new contact is easy to do in this Address Book. It will only take a few
     
     \clearpage
 
-    \item{\textbf{Click the "Add Contact" Button}}\\ You will see an "Add Contact" button on the main window. Move the mouse to it and click the "Add Contact" button. Upon clicking the Add Contact window will appear.
+    \item{\textbf{Click the "Add Contact" Button}}\\ You will see an "Add Contact" button on the main page. Move the mouse to it and click the "Add Contact" button. Upon clicking the Add Contact Window will appear.
     
     \begin{figure}[h!]
     \centering
@@ -93,7 +95,7 @@ Adding a new contact is easy to do in this Address Book. It will only take a few
       \caption{Add Contact Window}
     \end{figure}
     
-    \item{\textbf{Fill In Contact Data}}\\ The Add Contact window has multiple fields for you to fill in with Contact information. You are required to enter a first name or a last name, plus a second entry of the ones laid out.
+    \item{\textbf{Fill In Contact Data}}\\ The Add Contact window has multiple fields for you to fill in with Contact information. You are required to enter a first name or a last name, plus a second entry of the ones laid out. There must be another entry besides both the first and last names.
     
     \begin{figure}[h!]
     \centering
@@ -103,7 +105,7 @@ Adding a new contact is easy to do in this Address Book. It will only take a few
     
     \clearpage
     
-    \item{\textbf{Save New Contact Information}}\\ When you have entered all the information you wish to enter about your new contact click the "Save" button. This will permanently save the Contact to the Address Book. If you haven't entered all the required information detailed in the last step an error message will appear directing you back to the Add Contact window. It will keep doing this until the information is entered correctly.
+    \item{\textbf{Save New Contact Information}}\\ When you have entered all the information you wish to enter about your new contact click the "Save" button. This will permanently save the Contact to the Address Book. If you haven't entered all the required information detailed in the last step an error message will appear. This error message will direct you back to the Add Contact window. The error will not go away until the information is entered correctly.
     
     \begin{figure}[h!]
     \centering
@@ -216,7 +218,7 @@ If you wish to remove a Contact completely from your Address Book follow the ste
 
 \section{Sort Address Book}
 \subsection{Overview}
-If you want to see the list of contacts in either Descending by last name or Ascending by zip code then follow these steps. 
+If you want to see the list of contacts in either descending by last name or ascending by ZIP code.
 \subsection{Procedure}
 \begin{enumerate}[label=\textbf{\arabic*})]
     \item{\textbf{Begin at the Main Page of Non Empty Address Book}}\\ For this feature to work your Address Book must contain at least two Contacts.
@@ -227,9 +229,9 @@ If you want to see the list of contacts in either Descending by last name or Asc
       \caption{Full Main Page}
     \end{figure}
     
-    \item{\textbf{Order by Last Name}}\\ Click the button that says "Order by Last Name". Once selected you will see the ordering change as long as it wasn't in that order before. 
+    \item{\textbf{Order by Last Name}}\\ Click the radio button in the section labeled "Sort By:" named "Name". Once selected you will see the ordering change as long as it wasn't in that order before. 
     
-    \item{\textbf{Order by Zip Code}}\\ Click the button that says "Order by Zip Code". Once selected you will see the ordering change as long as it wasn't in that order before.
+    \item{\textbf{Order by Zip Code}}\\ Click the radio button in the section labeled "Sort By:" named "Zip Code". Once selected you will see the ordering change as long as it wasn't in that order before.
 \end{enumerate}
 
 \clearpage
@@ -257,7 +259,8 @@ If you would like to find a specific Contact without scrolling through the list 
     
     \clearpage
     
-    \item{\textbf{Enter Your Search}}\\ In the text entry field enter anything related to the Contact you wish to view. Once you type your query, click "Search". If there are any contacts matching your query they will present themselves in the scroll box.
+    \item{\textbf{Enter Your Search}}\\ In the text entry field enter anything related to the Contact you wish to view. Once you type your query, click ”Search”. If any contacts match your query they will present themselves in the scroll box.
+
     
     \begin{figure}[h!]
     \centering
@@ -284,7 +287,7 @@ When you first launch the Address Book application you will always open up to a 
       \caption{Full Main Page}
     \end{figure}
     
-    \item{\textbf{Select the File Menu}}\\ At the top of the Main page window there will be a button that reads "File". Select it and a menu will pop open.
+    \item{\textbf{Select the File Menu}}\\ At the top of the Main page window there will be a button named "File". Select it and a menu will pop open.
     
     \begin{figure}[h!]
     \centering
