@@ -3,9 +3,6 @@ package scheduler;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.*;
-
-import java.util.ArrayList;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -30,7 +27,7 @@ public class EditContactFrame extends JFrame {
 		/*
 		 * Sets up GUI text fields, labels, and buttons.
 		 */
-		super("New Entry");
+		super("Edit Entry");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		mainFrame = _mainFrame;
 		addressBook = mainFrame.getAB();
@@ -307,7 +304,7 @@ public class EditContactFrame extends JFrame {
 		email = _emailTxt.getText();
 		address1 = _address1Txt.getText();
 		address2 = _address2Txt.getText();
-		city = _emailTxt.getText();
+		city = _cityTxt.getText();
 		state = _stateTxt.getText();
 		zip = _zipTxt.getText();
 		
