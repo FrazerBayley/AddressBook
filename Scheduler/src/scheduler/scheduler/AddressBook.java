@@ -7,10 +7,12 @@ public class AddressBook {
 	private String filepath;
 	
 	AddressBook() {
+		/* blank slate "new" constructor */
 		AB = new ArrayList<Contact>();
 	}
 	
 	AddressBook(String filepath) {
+		/* constructor for "import" functionality */
 		AB = new ArrayList<Contact>();
 		try {
 			TSV_Reader.reader(this, filepath);
@@ -21,6 +23,11 @@ public class AddressBook {
 	}
 	
 	public void Open(String filepath) {
+		/*
+		 * This function is provided if a "new" address book
+		 * is instantiated then the user decides to import data.
+		 * calls tsv reader to populate additional contacts from file
+		 */
 		try {
 			TSV_Reader.reader(this, filepath);
 		} catch (Exception e) {
@@ -65,8 +72,14 @@ public class AddressBook {
 	}
 	
 	public ArrayList<Contact> Search(String term) {
-		// might be able to rearrange search terms for
-		// the most probable terms being searched first
+		/* Note: might be able to rearrange search terms for
+		 * the most probable terms being searched first...
+		 * Search will check every field of each contact object in the
+		 * address book; if any field matches part of the search it will
+		 * stop searching that contact and add it to the list of potential
+		 * matches to be returned. This keeps the search from redundant checks.
+		 * Apache commons library imported for substring search capability.
+		 */
 		ArrayList<Contact> rv = new ArrayList<Contact>();
 		
 		for (Contact c : AB) {
@@ -99,7 +112,6 @@ public class AddressBook {
 				continue;
 			}
 			if (org.apache.commons.lang3.StringUtils.containsIgnoreCase(c.getLastName(), term)){
-				//c.getLastName().contains(term)) {
 				rv.add(c);
 				continue;
 			}

@@ -9,7 +9,12 @@ import java.util.ArrayList;
 public class TSV_Writer {
 
 	public static boolean writer(AddressBook ab, String filepath) {
-		// need to assert filepath ends in .tsv
+		/*	Write out address book to .tsv formatted file on disk 
+		 *  file formatting enforced by GUI file explorer hence
+		 *  no apparent defensive coding here.  Try Except block
+		 *  format used to ensure no chance of writing to invalid
+		 *  disk sectors.
+		 */
 		Writer writer = null;
 
 		try {
