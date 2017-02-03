@@ -171,8 +171,7 @@ public class AddEntryFrame extends JFrame {
 	
 	public void addEntry() {
 		/*
-		 * Method addEntry() takes user inputed data from GUI and saves it 
-		 * to an array list. 
+		 * Method addEntry() takes user inputed data from GUI and saves it to an array list. 
 		 */
 		String fn, ln, phone, email, address1, address2, city, state, zip;
 		fn = _firstNameTxt.getText();
