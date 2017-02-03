@@ -26,8 +26,9 @@ import javax.swing.JTextField;
 import org.apache.commons.io.FilenameUtils;
 
 public class MainFrame {
-
+	
 	JFrame frame;
+	private MainFrame mainFrame;
     private JTable table;
     private JMenuBar menuBar;
     private JScrollPane scrollPane;
@@ -46,21 +47,25 @@ public class MainFrame {
 	private boolean addressBookChanged;
 	int frameXpos = 200;
 	int frameYpos = 200;
-	
 
 
 	/**
-	 * Create the application.
+	 * Create the GUI for the address book.
 	 */
 	public MainFrame() {
+		mainFrame = this;
 		initialize();
 	}
 	
+	/**
+	 * Create the GUI for the address book.
+	 * @param int x the x position in the screen
+	 * @param int y the y position in the screen
+	 */
 	public MainFrame(int x, int y) {
 		frameXpos = x;
 		frameYpos = y;
-		initialize();
-		
+		initialize();		
 	}
 
 	/**
@@ -68,7 +73,7 @@ public class MainFrame {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		openedWindows.add(this);
+		openedWindows.add(mainFrame);
 		menuBar = new JMenuBar();
 		setupMenuBar();
 	    frame.setJMenuBar(menuBar);
@@ -76,24 +81,14 @@ public class MainFrame {
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
+		// x button handler
 		frame.addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override
 		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-		    	if (addressBookChanged){
-		    		int option = JOptionPane.showConfirmDialog(frame, 
-		 		            "Do you want to save the changes made to the address book?", "Your changes will be lost if you don’t save them.", 
-		 		            JOptionPane.YES_NO_CANCEL_OPTION,
-		 		            JOptionPane.QUESTION_MESSAGE);
-		    		if (option == JOptionPane.YES_OPTION){
-		 		            save();
-		 		    }
-		    		else if (option == JOptionPane.NO_OPTION){
-	 		            
-		    		}
-		    		else{return;}
+		    	if (checkToSave() == JOptionPane.CANCEL_OPTION){
+		    		return;
 		    	}
-		    	openedWindows.remove(0);
-		    	System.out.println(openedWindows.size());
+		    	openedWindows.remove(mainFrame);
 		    	if (openedWindows.size() == 0){
 		    		System.exit(JFrame.EXIT_ON_CLOSE);
 		    	}
@@ -112,6 +107,8 @@ public class MainFrame {
 		frame.setTitle(title);
 		setupTable();
 		addressBook = new AddressBook();
+		
+		// the rest of the code is to setup all the Jcomponents
 		
 		JButton btnAddNewContact = new JButton("Add new contact");
 		btnAddNewContact.addActionListener(new ActionListener() {
@@ -190,8 +187,11 @@ public class MainFrame {
 		frame.getContentPane().add(lblNoteDoubleClick);
 	}
 	
+	/**
+	 * search take the input from the text field and show all the 
+	 * 		contacts that have a field matching the search term.
+	 */
 	protected void search() {
-		// TODO Auto-generated method stub
 		String text = textField.getText().trim();
 		if (text.equals("")){
 			contactsList = addressBook.getBook();
@@ -203,6 +203,9 @@ public class MainFrame {
 		}
 	}
 
+	/**
+	 * sets up a table to view some of the contacts info
+	 */
 	private void setupTable() {
 		// make the table scrollable
 		scrollPane = new JScrollPane();
@@ -229,22 +232,26 @@ public class MainFrame {
 		scrollPane.setViewportView(table);
 	}
 
+	/**
+	 * veiwItem create an instance of EditContactFrame and view the GUi window
+	 */
 	protected void veiwItem() {
-		// TODO Auto-generated method stub
 		int selectedRowIndex = table.getSelectedRow();
 		new EditContactFrame(this, contactsList.get(selectedRowIndex)).setVisible(true);
 	}
 
+	/**
+	 * addEntry create an instance of AddEntryFrame and view the GUi window
+	 */
 	protected void addEntry() {
-		// TODO Auto-generated method stub
 		new AddEntryFrame(this).setVisible(true);
 	}
 
-
-	
+	/**
+	 * showContacts: show all the contacts, that are stored in the contactsList, in the table
+	 */
 	public void showContacts(){
 				// get all the contacts here
-				
 				Object[][] data = new Object[contactsList.size()][3];
 				int key = 0;
 				for (Contact c : contactsList){
@@ -253,14 +260,13 @@ public class MainFrame {
 					data[key][2] = c.getPhone();
 					key++;
 				}
-				populateTable(data);
-				
-			
+				populateTable(data);		
 	}
-	
-	private void populateTable(Object[][] data) {
-		// TODO Auto-generated method stub
-		
+	/**
+	 * populateTable: gets all the data then show it in the table 
+	 * @param data
+	 */
+	private void populateTable(Object[][] data) {		
 		// to disable cell edit
 		@SuppressWarnings("serial")
 		DefaultTableModel tableModel = new DefaultTableModel(data, columnNames) {
@@ -275,7 +281,114 @@ public class MainFrame {
 		table.setModel(tableModel);
 	}
 
-	// setup the menu bar
+	/**
+	 * checkToSave: checks if there are changes made in the current address book
+	 * 			if there is, prompt a window to ask the user to save the changes or not
+	 * @return 
+	 */
+	protected int checkToSave() {
+		int option = -1 ;
+		if (addressBookChanged){
+			
+    		option = JOptionPane.showConfirmDialog(frame, 
+ 		            "Do you want to save the changes made to the address book?", "Your changes will be lost if you don’t save them.", 
+ 		            JOptionPane.YES_NO_CANCEL_OPTION,
+ 		            JOptionPane.QUESTION_MESSAGE);
+    		if (option == JOptionPane.YES_OPTION){
+    			save();
+ 		    }
+    		else if (option == JOptionPane.NO_OPTION){
+    			
+    		}
+    		
+		}
+		return option;
+	}
+
+	/**
+	 * save the current address book to a tsv file
+	 */
+	protected void save() {
+		if (file == null){
+			saveAs();
+		}
+		else{
+			addressBook.Save(file.getAbsolutePath().toString());
+		}
+		addressBookChanged = false;
+	}
+
+	/**
+	 * save the current address book to a tsv file as a new file
+	 */
+	private void saveAs() {
+		// source: http://stackoverflow.com/questions/17010647/set-default-saving-extention-with-jfilechooser
+		JFileChooser saveAsChooser = new JFileChooser();
+		saveAsChooser.setSelectedFile(new File(title+".tsv"));
+		FileNameExtensionFilter tsvfilter = new FileNameExtensionFilter(
+			     "tsv files (*.tsv)", "tsv");
+		saveAsChooser.setFileFilter(tsvfilter);
+		saveAsChooser.setDialogTitle("Specify a file to save");   
+		 
+		int userSelection = saveAsChooser.showSaveDialog(frame);
+		 
+		if (userSelection == JFileChooser.APPROVE_OPTION) {
+		    File fileToSave = saveAsChooser.getSelectedFile();
+		    if (FilenameUtils.getExtension(fileToSave.getName()).equalsIgnoreCase("tsv")) {
+		        // filename is OK as-is
+		    } else {
+		    	fileToSave = new File(fileToSave.toString() + ".tsv");
+		    	fileToSave = new File(fileToSave.getParentFile(), FilenameUtils.getBaseName(fileToSave.getName())+".tsv");
+		    }
+		    System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+		    addressBook.Save(fileToSave.getAbsolutePath().toString());
+		    setFile(fileToSave);
+		    //File w = new File(fileToSave.getAbsolutePath().toString());
+		    //System.out.println("file: " + FilenameUtils.getBaseName(w.getName()));
+		    addressBookChanged = false;
+		}
+		
+	}
+
+	/**
+	 * set the title of the window as the file name
+	 * @param f the file opened
+	 */
+	protected void setFile(File f) {
+		file = f;
+		title = FilenameUtils.getBaseName(file.getName());
+		frame.setTitle(title);
+	}
+
+	/**
+	 * to get the addressBook
+	 * @return the current address book
+	 */
+	public AddressBook getAB() {
+		return addressBook;
+	}
+
+	/**
+	 * to set the addressBook
+	 */
+	public void setAB(AddressBook aB) {
+		addressBook = aB;
+	}
+	
+	/**
+	 * this method should be called when changes are made to any contacts in the address book
+	 * 		it will redisplay the address book with the new changes
+	 */
+	public void refreshAB() {
+		// Search the contactsList again
+		addressBookChanged  = true;
+		search();
+	}
+	
+	/**
+	 * Sets up the menu bar by adding file in the menu which include:
+	 * 		Open, Save, Save As, Close, Quit and their functionality
+	 */
 	private void setupMenuBar() {
 		// File Menu, F - Mnemonic
 	    JMenu fileMenu = new JMenu("File");
@@ -304,8 +417,6 @@ public class MainFrame {
 
 	    		openChooser.setCurrentDirectory(workingDirectory);
 	    		openChooser.setDialogTitle("Open a file");
-	    		//chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-	    		//chooser.setAcceptAllFileFilterUsed(false);
 	    		FileNameExtensionFilter tsvfilter = new FileNameExtensionFilter(
 	    			     "tsv files (*.tsv)", "tsv");
 	    		openChooser.setFileFilter(tsvfilter);
@@ -329,7 +440,6 @@ public class MainFrame {
 	    	public void actionPerformed(ActionEvent e) {
 	    		// save
 	    		save();
-	    		addressBookChanged = false;
 	    	}
 	    });
 	    fileMenu.add(saveMenuItem);
@@ -340,7 +450,6 @@ public class MainFrame {
 	    	public void actionPerformed(ActionEvent e) {
 	    		// save as
 	    		saveAs();
-	    		addressBookChanged = false;
 	    	}
 	    });
 	    fileMenu.add(saveasMenuItem);
@@ -349,23 +458,12 @@ public class MainFrame {
 	    JMenuItem closeMenuItem = new JMenuItem("Close", null);
 	    closeMenuItem.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
-	    		if (addressBookChanged){
-		    		int option = JOptionPane.showConfirmDialog(frame, 
-		 		            "Do you want to save the changes made to the address book?", "Your changes will be lost if you don’t save them.", 
-		 		            JOptionPane.YES_NO_CANCEL_OPTION,
-		 		            JOptionPane.QUESTION_MESSAGE);
-		    		if (option == JOptionPane.YES_OPTION){
-		    			save();
-		 		    }
-		    		else if (option == JOptionPane.NO_OPTION){
-		    		}
-		    		else{
-		    			return;
-		    		}
+	    		if (checkToSave() == JOptionPane.CANCEL_OPTION){
+		    		return;
 		    	}
 	    		Point p = frame.getLocation();
 	    		//Point y = frame.getLocationOnScreen();
-	    		openedWindows.remove(0);
+	    		openedWindows.remove(mainFrame);
 	    		frame.dispose();
 	    		txtBookNum++;
 	    		new MainFrame(p.x, p.y).frame.setVisible(true);
@@ -375,26 +473,13 @@ public class MainFrame {
 	    });
 	    fileMenu.add(closeMenuItem);
 	    
-	    // File->Close, N - Mnemonic
+	    // File->Quit, N - Mnemonic
 	    JMenuItem quitMenuItem = new JMenuItem("Quit", null);
 	    quitMenuItem.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
-	    		if (addressBookChanged){
-		    		int option = JOptionPane.showConfirmDialog(frame, 
-		 		            "Do you want to save the changes made to the address book?", "Your changes will be lost if you don’t save them.", 
-		 		            JOptionPane.YES_NO_CANCEL_OPTION,
-		 		            JOptionPane.QUESTION_MESSAGE);
-		    		if (option == JOptionPane.YES_OPTION){
-		    			save();
-		 		    }
-		    		else if (option == JOptionPane.NO_OPTION){
-		    			
-		    		}
-		    		else{return;}
-		    		
+	    		if (checkToSave() == JOptionPane.CANCEL_OPTION){
+		    		return;
 		    	}
-	    		//Point y = frame.getLocationOnScreen();
-	    		openedWindows.remove(0);
 	    		for (MainFrame f : openedWindows){
 	    			f.checkToSave();
 	    		}
@@ -402,88 +487,8 @@ public class MainFrame {
 	    	}
 	    });
 	    fileMenu.add(quitMenuItem);
-	    
-	}
-	
-	protected void checkToSave() {
-		// TODO Auto-generated method stub
-		if (addressBookChanged){
-    		int option = JOptionPane.showConfirmDialog(frame, 
- 		            "Do you want to save the changes made to the address book?", "Your changes will be lost if you don’t save them.", 
- 		            JOptionPane.YES_NO_CANCEL_OPTION,
- 		            JOptionPane.QUESTION_MESSAGE);
-    		if (option == JOptionPane.YES_OPTION){
-    			save();
- 		    }
-    		else if (option == JOptionPane.NO_OPTION){
-    			
-    		}
-    		else{return;}
+		    
 		}
-		
-	}
-
-	protected void save() {
-		// TODO Auto-generated method stub
-		if (file == null){
-			saveAs();
-		}
-		else{
-			addressBook.Save(file.getAbsolutePath().toString());
-		}
-	}
-
-	private void saveAs() {
-		// TODO Auto-generated method stub
-		// source: http://stackoverflow.com/questions/17010647/set-default-saving-extention-with-jfilechooser
-		JFileChooser saveAsChooser = new JFileChooser();
-		saveAsChooser.setSelectedFile(new File(title+".tsv"));
-		FileNameExtensionFilter tsvfilter = new FileNameExtensionFilter(
-			     "tsv files (*.tsv)", "tsv");
-		saveAsChooser.setFileFilter(tsvfilter);
-		saveAsChooser.setDialogTitle("Specify a file to save");   
-		 
-		int userSelection = saveAsChooser.showSaveDialog(frame);
-		 
-		if (userSelection == JFileChooser.APPROVE_OPTION) {
-		    File fileToSave = saveAsChooser.getSelectedFile();
-		    if (FilenameUtils.getExtension(fileToSave.getName()).equalsIgnoreCase("tsv")) {
-		        // filename is OK as-is
-		    } else {
-		    	fileToSave = new File(fileToSave.toString() + ".tsv");
-		    	fileToSave = new File(fileToSave.getParentFile(), FilenameUtils.getBaseName(fileToSave.getName())+".tsv");
-		    }
-		    System.out.println("Save as file: " + fileToSave.getAbsolutePath());
-		    addressBook.Save(fileToSave.getAbsolutePath().toString());
-		    setFile(fileToSave);
-		    //File w = new File(fileToSave.getAbsolutePath().toString());
-		    //System.out.println("file: " + FilenameUtils.getBaseName(w.getName()));
-		}
-	}
-
-
-	protected void setFile(File f) {
-		// TODO Auto-generated method stub
-		file = f;
-		title = FilenameUtils.getBaseName(file.getName());
-		frame.setTitle(title);
-	}
-
-	public AddressBook getAB() {
-		return addressBook;
-	}
-
-	public void setAB(AddressBook aB) {
-		addressBook = aB;
-	}
-	
-	public void refreshAB() {
-		// Search the contactsList again
-		addressBookChanged  = true;
-		search();
-	}
-	
-	
 	
 }
 
