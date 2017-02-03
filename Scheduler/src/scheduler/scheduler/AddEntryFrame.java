@@ -35,9 +35,12 @@ public class AddEntryFrame extends JFrame {
 		super("New Entry");
 		mainFrame = _mainFrame;
 		addressBook = mainFrame.getAB();
+		
+		/*
+		 * Prompts user before closing window after the red 'x' is pressed. 
+		 */
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		this.addWindowListener(new java.awt.event.WindowAdapter() {
-
+		this.addWindowListener(new java.awt.event.WindowAdapter() {	
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
 				boolean flag;
 				Contact newContact = makeContactNow();
@@ -125,7 +128,6 @@ public class AddEntryFrame extends JFrame {
 		_saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				addEntry();
-				
 			}
 			
 		});
@@ -144,10 +146,8 @@ public class AddEntryFrame extends JFrame {
 	
 	public void closeWindow() {
 		/*
-		 * Method closeWindow() prompts the user whether or not they want to
-		 * add changes before closing. 
-		 * yes - method calls addEntry()
-		 * no - method closes window. 
+		 * Method closeWindow() prompts the user whether or not they want to add changes before closing. 
+		 * If user selects yes, method calls addEntry(). If user selects no, method closes window. 
 		 */
 		boolean flag;
 		Contact newContact = makeContactNow();
@@ -193,7 +193,10 @@ public class AddEntryFrame extends JFrame {
 			JOptionPane.showMessageDialog(null, "Please enter at least one additional category");
 			return;
 		}
-		 
+		
+		/*
+		 * Checks for valid zipcode, prompts user if zipcode is not in the right format. 
+		 */
 		if (!_zipTxt.getText().equals("") && ((_zipTxt.getText().length() != 5) || (!isNumber(_zipTxt.getText())))) {
 		
 			int dialogResult = JOptionPane.YES_NO_OPTION;
@@ -209,13 +212,17 @@ public class AddEntryFrame extends JFrame {
 		tempContact = makeContactNow();
 		addressBook.Add(ne);
 		mainFrame.refreshAB();
-		//this.dispose();
 		JOptionPane.showMessageDialog(null, "Contact Saved");
 		entryAdded = true;
 		
 	}
 	
 	boolean entriesAreEmpty(){
+		/*
+	 	 * Method entriesAreEmpty() checks if textboxes are empty and returns a boolean value:
+		 *	true  - if all entries are empty.
+		 *	false - if at least one entry is not empty. 
+		 */
 		if (	_firstNameTxt.getText().equals("")
 				&& _lastNameTxt.getText().equals("")
 				&& _phoneTxt.getText().equals("")
@@ -261,47 +268,53 @@ public class AddEntryFrame extends JFrame {
 		 * 		true  - changes between two contacts
 		 * 		false - no changes between two contacts 
 		 */
-	    boolean flag = false; //not different
-	    if (!one.getFirstName().equals(two.getFirstName())){
-	        flag = true; //different
-	        return flag;
-	    }
-	    if (!one.getLastName().equals(two.getLastName())){
-	        flag = true;
-	        return flag;
-	    }
-	    if (!one.getPhone().equals(two.getPhone())){
-	        flag = true;
-	        return flag;
-	    }
-	    if (!one.getEmail().equals(two.getEmail())){
-	        flag = true;
-	        return flag;
-	    }
-	    if (!one.getAddress1().equals(two.getAddress1())){
-	        flag = true;
-	        return flag;
-	    }
-	    if (!one.getAddress2().equals(two.getAddress2())){
-	        flag = true;
-	        return flag;
-	    }
-	    if (!one.getCity().equals(two.getCity())){
-	        flag = true;
-	        return flag;
-	    }
-	    if (!one.getState().equals(two.getState())){
-	        flag = true;
-	        return flag;
-	    }
-	    if (!one.getZip().equals(two.getZip())){
-	        flag = true;
-	        return flag;
-	    }
-	    return flag;
+		boolean flag = false;
+	    	if (!one.getFirstName().equals(two.getFirstName())){
+			flag = true; 
+	        	return flag;
+	   	 }
+	   	if (!one.getLastName().equals(two.getLastName())){
+	        	flag = true;
+	       		return flag;
+	    	}
+	    	if (!one.getPhone().equals(two.getPhone())){
+	        	flag = true;
+	        	return flag;
+	    	}
+	    	if (!one.getEmail().equals(two.getEmail())){
+	        	flag = true;
+	        	return flag;
+	    	}
+	    	if (!one.getAddress1().equals(two.getAddress1())){
+	        	flag = true;
+	        	return flag;
+	    	}
+	    	if (!one.getAddress2().equals(two.getAddress2())){
+	        	flag = true;
+	        	return flag;
+	    	}
+	    	if (!one.getCity().equals(two.getCity())){
+	        	flag = true;
+	        	return flag;
+	    	}
+	    	if (!one.getState().equals(two.getState())){
+	        	flag = true;
+	        	return flag;
+	    	}
+	    	if (!one.getZip().equals(two.getZip())){
+	        	flag = true;
+	        	return flag;
+	    	}
+	    	return flag;
 	}
 	
 	public boolean isNumber(String str) {
+		/*
+		 * Source: http://stackoverflow.com/questions/1102891/how-to-check-if-a-string-is-numeric-in-java
+		 * Method isNumber(String) takes a string as an arguement and returns a boolean value:
+		 * 	true  - if the string is a number.
+		 *	false - if the string contains a character that is not a number. 
+		 */ 
 		try {
 			Integer.parseInt(str);
 		} catch (NumberFormatException nfe) {
