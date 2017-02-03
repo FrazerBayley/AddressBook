@@ -34,6 +34,10 @@ public class EditContactFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		mainFrame = _mainFrame;
 		addressBook = mainFrame.getAB();
+		
+		/*
+		 * Prompts user before closing window after the red 'x' is pressed. 
+		 */
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.addWindowListener(new java.awt.event.WindowAdapter() {
 
@@ -166,10 +170,8 @@ public class EditContactFrame extends JFrame {
 	
 	public void closeWindow() {
 		/*
-		 * Method closeWindow() checks to see if changes have been made since the save button has been pressed. If not, the window is closed, if so, it
-		 * prompts the user whether or not they want to save changes before closing. 
-		 * yes - method calls addEntry()
-		 * no - method closes window. 
+		 * Method closeWindow() prompts the user whether or not they want to save changes before closing. 
+		 * If user selects yes, method calls addEntry(). If user selects no, method closes window. 
 		 */
 		boolean flag;
 		Contact newContact = makeContactNow();
@@ -201,6 +203,10 @@ public class EditContactFrame extends JFrame {
 		
 		ne.setFirstName(_firstNameTxt.getText());
 		ne.setLastName(_lastNameTxt.getText());
+		
+		/*
+		 * Checks for one additional category. 
+		 */
 		if ((_phoneTxt.getText() == "") && (_emailTxt.getText() == "") && (_address1Txt.getText() == "") && (_address2Txt.getText() == "") && (_cityTxt.getText() == "") && (_stateTxt.getText() == "") && (_zipTxt.getText() == "")) {
 			JOptionPane.showMessageDialog(null, "Please enter at least one additional category");
 			return;
@@ -213,6 +219,9 @@ public class EditContactFrame extends JFrame {
 		ne.setState(_stateTxt.getText());
 		ne.setZip(_zipTxt.getText());
 		
+		/*
+		 * Checks for valid zipcode, prompts user if zipcode is not in the right format. 
+		 */
 		if (!_zipTxt.getText().equals("") && ((_zipTxt.getText().length() != 5) || (!isNumber(_zipTxt.getText())))) {
 			
 			int dialogResult = JOptionPane.YES_NO_OPTION;
@@ -270,6 +279,9 @@ public class EditContactFrame extends JFrame {
 	}
 	
 	public void veiwContactInfo(){
+		/*
+		 * Method viewContactInfo() sets text boxes with information passed through the contact information. 
+		 */
 		_firstNameTxt.setText(ne.getFirstName());
 		_lastNameTxt.setText(ne.getLastName());
 		_phoneTxt.setText(ne.getPhone());
@@ -352,6 +364,12 @@ public class EditContactFrame extends JFrame {
 	}
 	
 	public boolean isNumber(String str) {
+		/*
+		 * Source: http://stackoverflow.com/questions/1102891/how-to-check-if-a-string-is-numeric-in-java
+		 * Method isNumber(String) takes a string as an arguement and returns a boolean value:
+		 * 	true  - if the string is a number.
+		 *	false - if the string contains a character that is not a number. 
+		 */ 		
 		try {
 			Integer.parseInt(str);
 		} catch (NumberFormatException nfe) {
